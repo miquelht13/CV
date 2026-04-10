@@ -1,0 +1,2585 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Miquel Huete Tabernero - Aerospace Systems Engineer specializing in Unmanned Aircraft Systems (UAS) and Drone Technology">
+    <title>Miquel Huete | UAS & Aerospace Systems Engineer</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Leaflet.js CSS and JavaScript -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+         crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+         crossorigin=""></script>
+    
+    <style>
+        /* ==================== CSS VARIABLES ==================== */
+        :root {
+            /* Colors */
+            --primary: #0A2463;
+            --secondary: #3E92CC;
+            --accent: #00D9FF;
+            --dark: #1A1A1A;
+            --dark-alt: #2A2A2A;
+            --light: #F8F9FA;
+            --white: #FFFFFF;
+            --gray: #6C757D;
+            --gray-light: #E9ECEF;
+            
+            /* Typography */
+            --font-display: 'Rajdhani', sans-serif;
+            --font-body: 'Manrope', sans-serif;
+            
+            /* Spacing */
+            --section-padding: 120px;
+            --section-padding-mobile: 60px;
+            --container-max: 1200px;
+            
+            /* Transitions */
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* ==================== RESET & BASE ==================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+        
+        body {
+            font-family: var(--font-body);
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Technical Grid Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(62, 146, 204, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(62, 146, 204, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        ::selection {
+            background-color: var(--accent);
+            color: var(--dark);
+        }
+        
+        /* ==================== TYPOGRAPHY ==================== */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+        
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 1rem;
+        }
+        
+        h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 0.75rem;
+        }
+        
+        h3 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            margin-bottom: 0.5rem;
+        }
+        
+        p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--gray-light);
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+        
+        /* ==================== CONTAINER ==================== */
+        .container {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* ==================== LANGUAGE TOGGLE ==================== */
+        .lang-toggle {
+            display: flex;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(0, 217, 255, 0.3);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .lang-toggle-btn {
+            background: transparent;
+            border: none;
+            color: var(--gray);
+            padding: 0.45rem 0.85rem;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+        }
+
+        .lang-toggle-btn:hover {
+            color: var(--light);
+        }
+
+        .lang-toggle-btn.active {
+            background: var(--accent);
+            color: var(--dark);
+        }
+
+        .lang-toggle-divider {
+            width: 1px;
+            height: 18px;
+            background: rgba(0, 217, 255, 0.3);
+        }
+        
+        /* ==================== HEADER/NAVIGATION ==================== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.5rem 0;
+            transition: var(--transition);
+        }
+        
+        header.scrolled {
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(62, 146, 204, 0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-center {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.05em;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+        
+        .nav-links a {
+            font-family: var(--font-display);
+            font-weight: 500;
+            font-size: 1.05rem;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            position: relative;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+        
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+        
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+        
+        /* ==================== HERO SECTION ==================== */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding-top: 80px;
+        }
+        
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .hero-text {
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        .hero-label {
+            font-family: var(--font-display);
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+        
+        .hero-text h1 {
+            background: linear-gradient(135deg, var(--white) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+        }
+        
+        .hero-text .subtitle {
+            font-size: 1.3rem;
+            color: var(--secondary);
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+        
+        .hero-description {
+            max-width: 500px;
+            margin-bottom: 2.5rem;
+        }
+        
+        .hero-cta {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 1rem 2.5rem;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 1.05rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary {
+            background: var(--accent);
+            color: var(--dark);
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--secondary);
+            transition: var(--transition);
+            z-index: -1;
+        }
+        
+        .btn-primary:hover::before {
+            left: 0;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--accent);
+            color: var(--dark);
+        }
+        
+        /* Hero Image Placeholder */
+        .hero-image {
+            position: relative;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+        
+        .hero-image-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
+        }
+        
+        /* <!-- ============ EDITABLE: INSERTAR TU FOTO DE PERFIL AQUÃ ============ --> */
+        .profile-placeholder {
+            width: 100%;
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, var(--dark-alt) 0%, var(--primary) 100%);
+            border: 3px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            text-align: center;
+            color: var(--gray);
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .profile-placeholder::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 217, 255, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+        
+        /* Para cuando insertes tu imagen real, usa esta clase */
+        .profile-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none; /* Cambiar a block cuando tengas la imagen */
+        }
+        
+        /* Technical decoration */
+        .hero-decoration {
+            position: absolute;
+            top: 50%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            border: 2px solid rgba(62, 146, 204, 0.2);
+            border-radius: 50%;
+            transform: translateY(-50%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        .hero-decoration::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: 80%;
+            border: 1px solid rgba(0, 217, 255, 0.3);
+            border-radius: 50%;
+        }
+        
+        /* ==================== ABOUT SECTION ==================== */
+        #about {
+            padding: var(--section-padding) 0;
+            background: rgba(42, 42, 42, 0.3);
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        .section-label {
+            font-family: var(--font-display);
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+        
+        .section-title {
+            background: linear-gradient(135deg, var(--white) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .about-text {
+            background: rgba(10, 36, 99, 0.2);
+            border-left: 4px solid var(--accent);
+            padding: 2.5rem;
+            backdrop-filter: blur(10px);
+            margin-bottom: 3rem;
+        }
+        
+        .about-text p {
+            font-size: 1.15rem;
+            line-height: 1.9;
+        }
+        
+        .about-text p:not(:last-child) {
+            margin-bottom: 1.5rem;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(10, 36, 99, 0.2);
+            border: 1px solid rgba(62, 146, 204, 0.2);
+            transition: var(--transition);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.2);
+        }
+        
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: var(--gray-light);
+            font-size: 0.95rem;
+        }
+        
+        /* ==================== SKILLS SECTION ==================== */
+        #skills {
+            padding: var(--section-padding) 0;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .skill-category {
+            background: rgba(10, 36, 99, 0.2);
+            padding: 2rem;
+            border: 1px solid rgba(62, 146, 204, 0.2);
+            transition: var(--transition);
+        }
+        
+        .skill-category:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.1);
+        }
+        
+        .skill-category h3 {
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+        }
+        
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+        
+        .skill-tag {
+            background: rgba(0, 217, 255, 0.1);
+            color: var(--light);
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            border: 1px solid rgba(0, 217, 255, 0.3);
+            transition: var(--transition);
+            font-family: var(--font-display);
+            font-weight: 500;
+        }
+        
+        .skill-tag:hover {
+            background: var(--accent);
+            color: var(--dark);
+            transform: translateY(-2px);
+        }
+        
+        /* ==================== PORTFOLIO SECTION ==================== */
+        #portfolio {
+            padding: var(--section-padding) 0;
+            background: rgba(42, 42, 42, 0.3);
+        }
+        
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .project-card {
+            background: rgba(10, 36, 99, 0.2);
+            border: 1px solid rgba(62, 146, 204, 0.2);
+            overflow: hidden;
+            transition: var(--transition-slow);
+            cursor: pointer;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 217, 255, 0.2);
+            border-color: var(--accent);
+        }
+        
+        /* <!-- ============ EDITABLE: IMÃGENES DE PROYECTOS ============ --> */
+        .project-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--dark-alt) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(0, 217, 255, 0.05) 10px,
+                rgba(0, 217, 255, 0.05) 20px
+            );
+        }
+        
+        /* Cuando insertes imÃ¡genes reales, usa esta clase */
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none; /* Cambiar a block cuando tengas las imÃ¡genes */
+        }
+        
+        .project-content {
+            padding: 2rem;
+        }
+        
+        .project-category {
+            font-family: var(--font-display);
+            color: var(--accent);
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+        
+        .project-content h3 {
+            color: var(--white);
+            margin-bottom: 1rem;
+        }
+        
+        .project-description {
+            color: var(--gray-light);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+        
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tech-badge {
+            background: rgba(0, 217, 255, 0.1);
+            color: var(--accent);
+            padding: 0.3rem 0.8rem;
+            font-size: 0.85rem;
+            border: 1px solid rgba(0, 217, 255, 0.3);
+            font-family: var(--font-display);
+        }
+        
+        .project-link {
+            color: var(--accent);
+            font-family: var(--font-display);
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+        
+        .project-link:hover {
+            gap: 1rem;
+        }
+        
+        .project-link::after {
+            content: 'â†’';
+            font-size: 1.2rem;
+        }
+        
+        /* ==================== CONTACT SECTION ==================== */
+        #contact {
+            padding: var(--section-padding) 0;
+        }
+        
+        .contact-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .contact-intro {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+        }
+        
+        .contact-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .contact-card {
+            background: rgba(10, 36, 99, 0.2);
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(62, 146, 204, 0.2);
+            transition: var(--transition);
+        }
+        
+        .contact-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.2);
+        }
+        
+        .contact-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        .contact-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .contact-card a {
+            color: var(--secondary);
+            font-size: 0.95rem;
+        }
+        
+        .contact-card a:hover {
+            color: var(--accent);
+        }
+        
+        /* Contact Form */
+        .contact-form {
+            background: rgba(10, 36, 99, 0.2);
+            padding: 3rem;
+            border: 1px solid rgba(62, 146, 204, 0.2);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            font-family: var(--font-display);
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(62, 146, 204, 0.3);
+            color: var(--light);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(0, 217, 255, 0.1);
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+        
+        .form-submit {
+            width: 100%;
+        }
+        
+        /* ==================== PROJECT DRAWER ==================== */
+        .drawer-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(3px);
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .drawer-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .project-drawer {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: min(580px, 100vw);
+            height: 100vh;
+            background: #0f1e3d;
+            border-left: 1px solid rgba(0, 217, 255, 0.25);
+            z-index: 2001;
+            display: flex;
+            flex-direction: column;
+            transition: right 0.45s cubic-bezier(0.34, 1.15, 0.64, 1);
+            box-shadow: -20px 0 60px rgba(0, 0, 0, 0.6);
+        }
+
+        .project-drawer.active {
+            right: 0;
+        }
+
+        .drawer-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 1.75rem 2rem;
+            border-bottom: 1px solid rgba(0, 217, 255, 0.12);
+            background: rgba(0, 217, 255, 0.04);
+            flex-shrink: 0;
+        }
+
+        .drawer-header-info {
+            flex: 1;
+        }
+
+        .drawer-category {
+            font-family: var(--font-display);
+            color: var(--accent);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            margin-bottom: 0.4rem;
+        }
+
+        .drawer-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.3rem, 3vw, 1.7rem);
+            color: var(--white);
+            font-weight: 700;
+            line-height: 1.25;
+            margin: 0;
+        }
+
+        .drawer-close {
+            background: rgba(0, 217, 255, 0.08);
+            border: 1px solid rgba(0, 217, 255, 0.3);
+            color: var(--gray-light);
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: var(--transition);
+            flex-shrink: 0;
+            line-height: 1;
+        }
+
+        .drawer-close:hover {
+            background: var(--accent);
+            color: var(--dark);
+            border-color: var(--accent);
+        }
+
+        .drawer-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 2rem;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0, 217, 255, 0.3) transparent;
+        }
+
+        .drawer-body::-webkit-scrollbar { width: 4px; }
+        .drawer-body::-webkit-scrollbar-track { background: transparent; }
+        .drawer-body::-webkit-scrollbar-thumb { background: rgba(0, 217, 255, 0.3); border-radius: 2px; }
+
+        .drawer-media {
+            width: 100%;
+            border-radius: 0;
+            overflow: hidden;
+            margin-bottom: 1.75rem;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(0, 217, 255, 0.15);
+            aspect-ratio: 16/9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .drawer-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .drawer-media iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        .drawer-media-placeholder {
+            color: var(--gray);
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .drawer-description {
+            color: var(--gray-light);
+            font-size: 1rem;
+            line-height: 1.85;
+            margin-bottom: 1.75rem;
+        }
+
+        .drawer-tech-label {
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+        }
+
+        .drawer-tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.75rem;
+        }
+
+        .drawer-github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            color: var(--accent);
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: 1px solid rgba(0, 217, 255, 0.35);
+            padding: 0.65rem 1.4rem;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .drawer-github-link:hover {
+            background: var(--accent);
+            color: var(--dark);
+        }
+
+        /* ==================== FOOTER ==================== */
+        footer {
+            background: rgba(10, 10, 10, 0.9);
+            padding: 3rem 0 1.5rem;
+            border-top: 1px solid rgba(62, 146, 204, 0.2);
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-brand {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .social-link {
+            width: 45px;
+            height: 45px;
+            background: rgba(0, 217, 255, 0.1);
+            border: 1px solid rgba(0, 217, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: var(--accent);
+            transition: var(--transition);
+        }
+        
+        .social-link:hover {
+            background: var(--accent);
+            color: var(--dark);
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(62, 146, 204, 0.1);
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        /* ==================== ANIMATIONS ==================== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: translateY(-50%) scale(1);
+                opacity: 0.3;
+            }
+            50% {
+                transform: translateY(-50%) scale(1.05);
+                opacity: 0.5;
+            }
+        }
+        
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        /* Scroll animation triggers */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* ==================== RESPONSIVE DESIGN ==================== */
+        @media (max-width: 968px) {
+            :root {
+                --section-padding: 80px;
+            }
+            
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .hero-text {
+                text-align: center;
+            }
+            
+            .hero-cta {
+                justify-content: center;
+            }
+            
+            .hero-description {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: rgba(10, 36, 99, 0.98);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2rem;
+                transition: var(--transition);
+                border-left: 1px solid rgba(62, 146, 204, 0.2);
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .menu-toggle {
+                display: flex;
+            }
+            
+            .language-selector {
+                margin-top: 2rem;
+            }
+            
+            .container {
+                padding: 0 1.5rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-methods {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-form {
+                padding: 2rem 1.5rem;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-decoration {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .btn {
+                padding: 0.875rem 1.75rem;
+                font-size: 0.95rem;
+            }
+            
+            .project-image {
+                height: 200px;
+            }
+            
+            .map-container iframe {
+                height: 400px !important;
+            }
+        }
+        
+        /* ==================== LEAFLET MAP CUSTOM STYLES ==================== */
+
+        /* Map container */
+        .map-container {
+            width: 100%;
+            height: 540px;
+            border-radius: 0;
+            overflow: hidden;
+            box-shadow: 0 0 60px rgba(0, 217, 255, 0.08), inset 0 0 0 1px rgba(0, 217, 255, 0.2);
+            margin: 3rem 0;
+            position: relative;
+            border: 1px solid rgba(0, 217, 255, 0.2);
+        }
+
+        #professionalMap {
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* Map title overlay */
+        .map-title-overlay {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(10, 36, 99, 0.95);
+            padding: 15px 25px;
+            border-left: 3px solid var(--accent);
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
+        }
+
+        .map-title-overlay h3 {
+            color: var(--accent);
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            margin: 0 0 4px 0;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+        }
+
+        .map-title-overlay p {
+            color: var(--gray-light);
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            margin: 0;
+            opacity: 0.8;
+        }
+
+        /* â”€â”€ Slide-in Details Panel â”€â”€ */
+        #map-details-panel {
+            position: absolute;
+            bottom: 24px;
+            right: -440px;
+            width: 360px;
+            background: rgba(10, 30, 80, 0.97);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 217, 255, 0.35);
+            border-right: none;
+            z-index: 1000;
+            padding: 0;
+            transition: right 0.45s cubic-bezier(0.34, 1.4, 0.64, 1);
+            display: flex;
+            flex-direction: column;
+            box-shadow: -8px 0 40px rgba(0, 0, 0, 0.5);
+        }
+
+        #map-details-panel.panel-active {
+            right: 0;
+        }
+
+        .mdp-header {
+            padding: 18px 22px;
+            border-bottom: 1px solid rgba(0, 217, 255, 0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 217, 255, 0.05);
+        }
+
+        .mdp-header-text h2 {
+            margin: 0;
+            font-size: 1.3rem;
+            color: var(--accent);
+            font-family: var(--font-display);
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .mdp-header-text span {
+            font-size: 0.8rem;
+            color: var(--secondary);
+            font-family: var(--font-body);
+            display: block;
+            margin-top: 2px;
+        }
+
+        .mdp-close-btn {
+            background: none;
+            border: 1px solid rgba(0, 217, 255, 0.3);
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--gray-light);
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .mdp-close-btn:hover {
+            background: var(--accent);
+            color: var(--dark);
+            border-color: var(--accent);
+        }
+
+        .mdp-body {
+            padding: 20px 22px;
+            font-size: 0.9rem;
+            color: var(--gray-light);
+            line-height: 1.65;
+        }
+
+        .mdp-status-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            font-family: var(--font-display);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            background: rgba(0, 217, 255, 0.12);
+            color: var(--accent);
+            border: 1px solid rgba(0, 217, 255, 0.4);
+            margin-bottom: 14px;
+        }
+
+        .mdp-company-block {
+            background: rgba(255, 255, 255, 0.04);
+            border-left: 3px solid var(--accent);
+            padding: 12px 14px;
+            margin-bottom: 12px;
+        }
+
+        .mdp-company-block:last-child {
+            margin-bottom: 0;
+        }
+
+        .mdp-company-name {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--white);
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .mdp-role {
+            color: var(--accent);
+            font-size: 0.88rem;
+            font-family: var(--font-body);
+            font-weight: 500;
+            display: block;
+        }
+
+        .mdp-period {
+            color: var(--gray);
+            font-size: 0.82rem;
+            font-style: italic;
+            display: block;
+            margin-top: 2px;
+        }
+
+        .mdp-stat-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .mdp-stat {
+            background: rgba(0, 217, 255, 0.06);
+            border: 1px solid rgba(0, 217, 255, 0.15);
+            padding: 10px 12px;
+        }
+
+        .mdp-stat-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--gray);
+            font-family: var(--font-display);
+        }
+
+        .mdp-stat-value {
+            font-weight: 700;
+            color: var(--light);
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            margin-top: 2px;
+        }
+
+        /* GeoJSON country layer hover cursor */
+        .leaflet-interactive { cursor: pointer; }
+
+        /* Mobile responsive for map */
+        @media (max-width: 768px) {
+            .map-container {
+                height: 420px;
+                margin: 2rem 0;
+            }
+
+            .map-title-overlay {
+                top: 10px;
+                left: 10px;
+                padding: 10px 15px;
+            }
+
+            .map-title-overlay h3 { font-size: 0.95rem; }
+            .map-title-overlay p { font-size: 0.78rem; }
+
+            #map-details-panel {
+                width: 300px;
+                bottom: 16px;
+            }
+
+        }
+
+        @media (max-width: 480px) {
+            #map-details-panel {
+                width: 260px;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- ==================== HEADER/NAVIGATION ==================== -->
+    <header id="header">
+        <nav class="container">
+            <div class="logo">MH</div>
+            
+            <div class="nav-center">
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#hero" data-i18n="nav.home">Inicio</a></li>
+                    <li><a href="#about" data-i18n="nav.about">Sobre MÃ­</a></li>
+                    <li><a href="#skills" data-i18n="nav.skills">Skills</a></li>
+                    <li><a href="#portfolio" data-i18n="nav.portfolio">Proyectos</a></li>
+                    <li><a href="#contact" data-i18n="nav.contact">Contacto</a></li>
+                    
+                    <!-- Language selector in mobile menu -->
+                    <li class="lang-toggle" id="langToggleMobile" style="display:none; margin-top:1.5rem;">
+                        <button class="lang-toggle-btn active" data-lang="es" id="btnEsMobile">ES</button>
+                        <div class="lang-toggle-divider"></div>
+                        <button class="lang-toggle-btn" data-lang="en" id="btnEnMobile">EN</button>
+                    </li>
+                </ul>
+                
+                <!-- Desktop Language Toggle -->
+                <div class="lang-toggle" id="langToggleDesktop">
+                    <button class="lang-toggle-btn active" data-lang="es" id="btnEs">ES</button>
+                    <div class="lang-toggle-divider"></div>
+                    <button class="lang-toggle-btn" data-lang="en" id="btnEn">EN</button>
+                </div>
+            </div>
+            
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- ==================== HERO SECTION ==================== -->
+    <section id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <span class="hero-label" data-i18n="hero.label">Aerospace Systems Engineer</span>
+                    <h1>Miquel Huete Tabernero</h1>
+                    <p class="subtitle" data-i18n="hero.subtitle">UAS Specialist | Drone Technology Expert</p>
+                    <p class="hero-description" data-i18n="hero.description">
+                        Transformando la aviaciÃ³n del futuro a travÃ©s de sistemas no tripulados innovadores. 
+                        Experiencia internacional en desarrollo de soluciones autÃ³nomas y seguridad operacional.
+                    </p>
+                    <div class="hero-cta">
+                        <a href="#portfolio" class="btn btn-primary" data-i18n="hero.cta_projects">Ver Proyectos</a>
+                        <a href="#contact" class="btn btn-secondary" data-i18n="hero.cta_contact">Contactar</a>
+                    </div>
+                </div>
+                
+                <div class="hero-image">
+                    <div class="hero-image-container">
+                        <!-- ============ EDITABLE: FOTO DE PERFIL ============ -->
+                        <div class="profile-placeholder" data-i18n-html="hero.profile_placeholder">
+                            [INSERTAR TU FOTO DE PERFIL AQUÃ]
+                            <br><br>
+                            Formato recomendado: 800x800px, JPG/PNG
+                        </div>
+                    </div>
+                    <div class="hero-decoration"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ==================== ABOUT SECTION ==================== -->
+    <section id="about">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-label" data-i18n="about.label">ConÃ³ceme</p>
+                <h2 class="section-title" data-i18n="about.title">Sobre MÃ­</h2>
+            </div>
+            
+            <div class="about-content">
+                <div class="about-text fade-in">
+                    <p data-i18n-html="about.text1">
+                        Soy un <strong>Ingeniero de Sistemas Aeroespaciales</strong> especializado en Sistemas de Aeronaves No Tripuladas (UAS) 
+                        con experiencia prÃ¡ctica en tecnologÃ­a de drones, operaciones U-Space y seguridad aeronÃ¡utica. Mi trayectoria profesional 
+                        combina desarrollo tÃ©cnico innovador con gestiÃ³n de proyectos y cumplimiento normativo.
+                    </p>
+                    <p data-i18n-html="about.text2">
+                        Actualmente trabajo en <strong>Telespazio IbÃ©rica</strong> como Software Analyst, donde lidero proyectos crÃ­ticos como 
+                        EXTINCIA (sistemas de detecciÃ³n de conflictos para emergencias forestales) e ISSEC (operaciones U-Space). Mi experiencia 
+                        internacional en <strong>Alemania</strong> (Dronivo GmbH) me permitiÃ³ desarrollar soluciones de alto rendimiento integrando 
+                        comunicaciÃ³n satelital Starlink con sistemas ArduPilot.
+                    </p>
+                    <p data-i18n-html="about.text3">
+                        Mi pasiÃ³n es crear soluciones que empujen los lÃ­mites de lo posible en aviaciÃ³n autÃ³noma, siempre con un enfoque en 
+                        seguridad, innovaciÃ³n y excelencia operacional.
+                    </p>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card fade-in">
+                        <div class="stat-number">2+</div>
+                        <div class="stat-label" data-i18n="about.stat1">AÃ±os de Experiencia</div>
+                    </div>
+                    <div class="stat-card fade-in">
+                        <div class="stat-number">A1/A2/A3</div>
+                        <div class="stat-label" data-i18n="about.stat4">Licencias de Piloto</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ==================== PROFESSIONAL JOURNEY MAP SECTION ==================== -->
+    <section id="professional-map" style="padding: 60px 0; background: rgba(10, 36, 99, 0.03);">
+        <div class="container">
+            <!-- Map container with overlay title -->
+            <div class="map-container fade-in">
+                <!-- Map title overlay -->
+                <div class="map-title-overlay">
+                    <h3 data-i18n="map.title">ðŸŒ Trayectoria Profesional Internacional</h3>
+                </div>
+                
+                <!-- Leaflet Map -->
+                <div id="professionalMap"></div>
+
+                <!-- Slide-in Details Panel -->
+                <div id="map-details-panel">
+                    <div class="mdp-header">
+                        <div class="mdp-header-text">
+                            <h2 id="mdp-city-title">Ciudad</h2>
+                            <span id="mdp-country-title">PaÃ­s</span>
+                        </div>
+                        <button class="mdp-close-btn" onclick="closeMdPanel()">&times;</button>
+                    </div>
+                    <div class="mdp-body" id="mdp-body-content">
+                        <!-- Content injected by JS -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Map instructions -->
+            <div style="text-align: center; margin-top: 1.5rem; color: var(--gray); font-size: 0.9rem; font-family: var(--font-body);" class="fade-in">
+                <p data-i18n-html="map.instructions">
+                    ðŸ’¡ <strong>InteractÃºa con el mapa:</strong> Haz clic sobre <strong>EspaÃ±a</strong> o <strong>Alemania</strong> para ver los detalles de experiencia en cada paÃ­s.
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ==================== SKILLS SECTION ==================== -->
+    <section id="skills">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-label" data-i18n="skills.label">Competencias</p>
+                <h2 class="section-title" data-i18n="skills.title">Habilidades TÃ©cnicas</h2>
+            </div>
+            
+            <div class="skills-grid">
+                <div class="skill-category fade-in">
+                    <h3 data-i18n="skills.cat1_title">UAS & Aviation</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">ArduPilot</span>
+                        <span class="skill-tag">PX4</span>
+                        <span class="skill-tag">Mission Planner</span>
+                        <span class="skill-tag">U-Space</span>
+                        <span class="skill-tag">SORA</span>
+                        <span class="skill-tag">USSP</span>
+                        <span class="skill-tag">CD&R</span>
+                        <span class="skill-tag">Air Traffic Mgmt</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category fade-in">
+                    <h3 data-i18n="skills.cat2_title">Programming & Software</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">MATLAB</span>
+                        <span class="skill-tag">Simulink</span>
+                        <span class="skill-tag">C#</span>
+                        <span class="skill-tag">Visual C#</span>
+                        <span class="skill-tag">Linux/Ubuntu</span>
+                        <span class="skill-tag">Git</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category fade-in">
+                    <h3 data-i18n="skills.cat3_title">Engineering & Design</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Fusion 360</span>
+                        <span class="skill-tag">SolidWorks</span>
+                        <span class="skill-tag">3D Printing</span>
+                        <span class="skill-tag">CAD Design</span>
+                        <span class="skill-tag">Prototyping</span>
+                        <span class="skill-tag">System Integration</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category fade-in">
+                    <h3 data-i18n="skills.cat4_title">Algorithms & Analysis</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">IMM-EKF</span>
+                        <span class="skill-tag">YOLOv11</span>
+                        <span class="skill-tag">Computer Vision</span>
+                        <span class="skill-tag">Trajectory Prediction</span>
+                        <span class="skill-tag">LiDAR Analysis</span>
+                        <span class="skill-tag">Data Processing</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category fade-in">
+                    <h3 data-i18n="skills.cat5_title">Project Management</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Requirements Analysis</span>
+                        <span class="skill-tag">Planning</span>
+                        <span class="skill-tag">Risk Assessment</span>
+                        <span class="skill-tag">Documentation</span>
+                        <span class="skill-tag">Team Leadership</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category fade-in">
+                    <h3 data-i18n="skills.cat6_title">Languages</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag" data-i18n="skills.lang_spanish">Spanish (Native)</span>
+                        <span class="skill-tag" data-i18n="skills.lang_catalan">Catalan (Native)</span>
+                        <span class="skill-tag" data-i18n="skills.lang_english">English (B2)</span>
+                        <span class="skill-tag" data-i18n="skills.lang_french">French (B1)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ==================== PORTFOLIO SECTION ==================== -->
+    <section id="portfolio">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-label" data-i18n="portfolio.label">Trabajos Destacados</p>
+                <h2 class="section-title" data-i18n="portfolio.title">Portfolio de Proyectos</h2>
+            </div>
+            
+            <!-- PROFESSIONAL PROJECTS -->
+            <div style="margin-bottom: 4rem;">
+                <h3 style="color: var(--accent); font-size: 1.8rem; margin-bottom: 2rem; text-align: center;" data-i18n="portfolio.professional_title">
+                    ðŸ’¼ Proyectos Profesionales
+                </h3>
+                <div class="portfolio-grid">
+                
+                <!-- PROYECTO 1: EXTINCIA -->
+                <div class="project-card fade-in">
+                    <div class="project-image">
+                        <span data-i18n="portfolio.p1_img_placeholder">[INSERTAR IMAGEN: EXTINCIA PROJECT]<br>Sistema CD&R / RADAR / Tracking</span>
+                    </div>
+                    <div class="project-content">
+                        <span class="project-category" data-i18n="portfolio.p1_category">Emergency Response Systems</span>
+                        <h3 data-i18n="portfolio.p1_title">EXTINCIA - Forest Fire CD&R System</h3>
+                        <p class="project-description" data-i18n="portfolio.p1_description">
+                            Sistema integral de DetecciÃ³n y ResoluciÃ³n de Conflictos para operaciones UAS en escenarios de emergencia. 
+                            Incluye simulador RADAR, tracking con filtros IMM-EKF avanzados, y predicciÃ³n de trayectorias para 
+                            prevenir colisiones UAS-to-UAS y VFR-to-UAS durante operaciones de extinciÃ³n de incendios forestales.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-badge">Python</span>
+                            <span class="tech-badge">IMM-EKF</span>
+                            <span class="tech-badge">RADAR</span>
+                            <span class="tech-badge">U-Space</span>
+                            <span class="tech-badge">CD&R</span>
+                        </div>
+                        <a href="#" class="project-link drawer-trigger" data-project="p1" data-i18n="portfolio.view_details">Ver detalles</a>
+                    </div>
+                </div>
+                
+                <!-- PROYECTO 2: DRONIVO -->
+                <div class="project-card fade-in">
+                    <div class="project-image">
+                        <span data-i18n="portfolio.p2_img_placeholder">[INSERTAR IMAGEN: DRONIVO PROJECT]<br>IntegraciÃ³n Starlink + ArduPilot</span>
+                    </div>
+                    <div class="project-content">
+                        <span class="project-category" data-i18n="portfolio.p2_category">R&D Innovation</span>
+                        <h3 data-i18n="portfolio.p2_title">Unlimited-Range UAS with Starlink</h3>
+                        <p class="project-description" data-i18n="portfolio.p2_description">
+                            Desarrollo de soluciÃ³n de vehÃ­culo no tripulado de alto rendimiento integrando comunicaciÃ³n satelital Starlink 
+                            con ecosistema ArduPilot-Pixhawk. Permite operaciones sin lÃ­mite de distancia para aplicaciones aÃ©reas 
+                            personalizables. Incluye integraciÃ³n de gimbal Gremsy y cÃ¡mara Sony ILX-LR1.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-badge">ArduPilot</span>
+                            <span class="tech-badge">Starlink</span>
+                            <span class="tech-badge">System Integration</span>
+                            <span class="tech-badge">CAD</span>
+                            <span class="tech-badge">3D Printing</span>
+                        </div>
+                        <a href="#" class="project-link drawer-trigger" data-project="p2" data-i18n="portfolio.view_details">Ver detalles</a>
+                    </div>
+                </div>
+                
+                <!-- PROYECTO 4: ENAIRE -->
+                <div class="project-card fade-in">
+                    <div class="project-image">
+                        <span data-i18n="portfolio.p4_img_placeholder">[INSERTAR IMAGEN: ENAIRE APP]<br>MATLAB Application / LiDAR Analysis</span>
+                    </div>
+                    <div class="project-content">
+                        <span class="project-category" data-i18n="portfolio.p4_category">Aviation Operations</span>
+                        <h3 data-i18n="portfolio.p4_title">Airport CTR Drone Height Calculator</h3>
+                        <p class="project-description" data-i18n="portfolio.p4_description">
+                            AplicaciÃ³n MATLAB que utiliza datos LiDAR de elevaciÃ³n del terreno y Obstacle Limitation Surface (OLS) 
+                            para calcular automÃ¡ticamente la altura mÃ¡xima permisible de vuelo de drones en los alrededores del CTR 
+                            del aeropuerto de Barcelona-El Prat (LEBL), optimizando procesos de autorizaciÃ³n.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-badge">MATLAB</span>
+                            <span class="tech-badge">LiDAR</span>
+                            <span class="tech-badge">Aviation Regs</span>
+                            <span class="tech-badge">Data Analysis</span>
+                        </div>
+                        <a href="#" class="project-link drawer-trigger" data-project="p4" data-i18n="portfolio.view_details">Ver detalles</a>
+                    </div>
+                </div>
+                
+                </div>
+            </div>
+            
+            <!-- ACADEMIC PROJECTS -->
+            <div>
+                <h3 style="color: var(--accent); font-size: 1.8rem; margin-bottom: 2rem; text-align: center;" data-i18n="portfolio.academic_title">
+                    ðŸŽ“ Proyectos AcadÃ©micos
+                </h3>
+                
+                <!-- Master Projects -->
+                <h4 style="color: var(--secondary); font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center;" data-i18n="portfolio.master_subtitle">
+                    MÃ¡ster en UAS
+                </h4>
+                <div class="portfolio-grid" style="margin-bottom: 3rem;">
+                
+                    <!-- C-UAS TRACKING -->
+                    <div class="project-card fade-in">
+                        <div class="project-image">
+                            <span data-i18n="portfolio.p3_img_placeholder">[INSERTAR IMAGEN: C-UAS SYSTEM]<br>Computer Vision / Tracking System</span>
+                        </div>
+                        <div class="project-content">
+                            <span class="project-category" data-i18n="portfolio.p3_category">Computer Vision</span>
+                            <h3 data-i18n="portfolio.p3_title">C-UAS Drone Tracking System</h3>
+                            <p class="project-description" data-i18n="portfolio.p3_description">
+                                Sistema de tracking de drones utilizando servomotores, Raspberry Pi 4 con PiCamera, e implementaciÃ³n de 
+                                modelo YOLOv11 entrenado con Roboflow. DetecciÃ³n y seguimiento en tiempo real de aeronaves no tripuladas 
+                                con capacidad de rastreo automÃ¡tico.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-badge">YOLOv11</span>
+                                <span class="tech-badge">Python</span>
+                                <span class="tech-badge">Raspberry Pi</span>
+                                <span class="tech-badge">Computer Vision</span>
+                                <span class="tech-badge">Roboflow</span>
+                            </div>
+                            <a href="https://github.com/miquelht13/MED-TransversalProject/tree/main" class="project-link" target="_blank" data-i18n="portfolio.view_github">Ver en GitHub</a>
+                        </div>
+                    </div>
+                    
+                    <!-- SORA -->
+                    <div class="project-card fade-in">
+                        <div class="project-image">
+                            <span data-i18n="portfolio.p5_img_placeholder">[INSERTAR IMAGEN: SORA ASSESSMENT]<br>Risk Assessment / Medical Delivery</span>
+                        </div>
+                        <div class="project-content">
+                            <span class="project-category" data-i18n="portfolio.p5_category">Safety & Compliance</span>
+                            <h3 data-i18n="portfolio.p5_title">SORA Medical Delivery in Andorra</h3>
+                            <p class="project-description" data-i18n="portfolio.p5_description">
+                                EvaluaciÃ³n SORA (Specific Operations Risk Assessment) completa para operaciones de entrega de suministros 
+                                mÃ©dicos entre hospital y pista de esquÃ­ en regiÃ³n montaÃ±osa de Andorra. AnÃ¡lisis de viabilidad y seguridad 
+                                para transporte de sangre, medicamentos y materiales quirÃºrgicos.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-badge">SORA</span>
+                                <span class="tech-badge">Risk Assessment</span>
+                                <span class="tech-badge">UAS Operations</span>
+                                <span class="tech-badge">Medical Logistics</span>
+                            </div>
+                            <a href="#" class="project-link drawer-trigger" data-project="p3" data-i18n="portfolio.view_details">Ver detalles</a>
+                        </div>
+                    </div>
+                
+                </div>
+                
+                <!-- Bachelor Projects -->
+                <h4 style="color: var(--secondary); font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center;" data-i18n="portfolio.bachelor_subtitle">
+                    Grado en IngenierÃ­a de Sistemas Aeroespaciales
+                </h4>
+                <div class="portfolio-grid">
+                
+                    <!-- HEXSOON EDU450 -->
+                    <div class="project-card fade-in">
+                        <div class="project-image">
+                            <span data-i18n="portfolio.p7_img_placeholder">[INSERTAR IMAGEN: HEXSOON PROJECT]<br>Autonomous Flight / Color Detection</span>
+                        </div>
+                        <div class="project-content">
+                            <span class="project-category" data-i18n="portfolio.p7_category">Autonomous Systems</span>
+                            <h3 data-i18n="portfolio.p7_title">Hexsoon Edu450 Autonomous System</h3>
+                            <p class="project-description" data-i18n="portfolio.p7_description">
+                                Sistema UAS autÃ³nomo basado en detecciÃ³n de colores en baldosas terrestres. ConfiguraciÃ³n de Raspberry Pi 
+                                para vuelo autÃ³nomo segÃºn puntos cardinales detectados por color, incluyendo entrega automatizada de paquetes 
+                                y vuelo de retorno mediante waypoints guardados.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-badge">Raspberry Pi</span>
+                                <span class="tech-badge">Python</span>
+                                <span class="tech-badge">Computer Vision</span>
+                                <span class="tech-badge">ArduPilot</span>
+                                <span class="tech-badge">Autonomous Flight</span>
+                            </div>
+                            <a href="#" class="project-link drawer-trigger" data-project="p5" data-i18n="portfolio.view_details">Ver detalles</a>
+                        </div>
+                    </div>
+                    
+                    <!-- ASTERIX DECODER -->
+                    <div class="project-card fade-in">
+                        <div class="project-image">
+                            <span data-i18n="portfolio.p6_img_placeholder">[INSERTAR IMAGEN: ASTERIX APP]<br>Air Traffic Visualization</span>
+                        </div>
+                        <div class="project-content">
+                            <span class="project-category" data-i18n="portfolio.p6_category">Air Traffic Management</span>
+                            <h3 data-i18n="portfolio.p6_title">ASTERIX Air Traffic Decoder</h3>
+                            <p class="project-description" data-i18n="portfolio.p6_description">
+                                AplicaciÃ³n Visual C# capaz de decodificar archivos binarios ASTERIX Category y plotear rutas de aeronaves 
+                                en mapa satelital de Google. Incluye simulaciÃ³n en tiempo real de trÃ¡fico aÃ©reo en LEBL, visualizaciÃ³n de 
+                                datos de vuelo, y exportaciÃ³n de rutas a formato KML.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-badge">C#</span>
+                                <span class="tech-badge">Visual Studio</span>
+                                <span class="tech-badge">ASTERIX</span>
+                                <span class="tech-badge">Data Visualization</span>
+                                <span class="tech-badge">Google Maps API</span>
+                            </div>
+                            <a href="#" class="project-link drawer-trigger" data-project="p7" data-i18n="portfolio.view_details">Ver detalles</a>
+                        </div>
+                    </div>
+                    
+                    <!-- COLLISION AVOIDANCE -->
+                    <div class="project-card fade-in">
+                        <div class="project-image">
+                            <span data-i18n="portfolio.p8_img_placeholder">[INSERTAR IMAGEN: COLLISION AVOIDANCE]<br>Python Algorithm / Safety System</span>
+                        </div>
+                        <div class="project-content">
+                            <span class="project-category" data-i18n="portfolio.p8_category">Flight Safety</span>
+                            <h3 data-i18n="portfolio.p8_title">Aircraft Collision Avoidance Algorithm</h3>
+                            <p class="project-description" data-i18n="portfolio.p8_description">
+                                Algoritmo de prevenciÃ³n de colisiones entre aeronaves desarrollado en Python. Sistema de resoluciÃ³n de 
+                                conflictos basado en trayectorias predichas y maniobras de evasiÃ³n automÃ¡ticas para garantizar separaciÃ³n 
+                                mÃ­nima segura entre aeronaves.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-badge">Python</span>
+                                <span class="tech-badge">Conflict Resolution</span>
+                                <span class="tech-badge">Trajectory Planning</span>
+                                <span class="tech-badge">Safety Algorithms</span>
+                            </div>
+                            <a href="#" class="project-link drawer-trigger" data-project="p6" data-i18n="portfolio.view_details">Ver detalles</a>
+                        </div>
+                    </div>
+                
+                </div>
+            </div>
+            
+            </div>
+        </div>
+    </section>
+    
+    <!-- ==================== CONTACT SECTION ==================== -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-label" data-i18n="contact.label">Hablemos</p>
+                <h2 class="section-title" data-i18n="contact.title">Contacto</h2>
+            </div>
+            
+            <div class="contact-content">
+                <div class="contact-intro fade-in">
+                    <p data-i18n="contact.intro">
+                        Â¿Interesado en colaborar en proyectos de UAS, desarrollo aeroespacial o tecnologÃ­a de drones? 
+                        Estoy abierto a nuevas oportunidades y conversaciones. No dudes en contactarme.
+                    </p>
+                </div>
+                
+                <div class="contact-methods">
+                    <div class="contact-card fade-in">
+                        <div class="contact-icon">📧</div>
+                        <h3>Email</h3>
+                        <a href="mailto:miquelhuete.job@gmail.com" style="color: var(--secondary); font-size: 0.95rem;">miquelhuete.job@gmail.com</a>
+                    </div>
+                    
+                    <div class="contact-card fade-in">
+                        <div class="contact-icon">📱</div>
+                        <h3 data-i18n="contact.phone_label">Teléfono</h3>
+                        <a href="tel:+34644054499" style="color: var(--secondary); font-size: 0.95rem;">+34 644 054 499</a>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    
+    <!-- ==================== PROJECT DRAWER ==================== -->
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+    <aside class="project-drawer" id="projectDrawer" role="dialog" aria-modal="true" aria-label="Project details">
+        <div class="drawer-header">
+            <div class="drawer-header-info">
+                <div class="drawer-category" id="drawerCategory"></div>
+                <h2 class="drawer-title" id="drawerTitle"></h2>
+            </div>
+            <button class="drawer-close" id="drawerClose" aria-label="Close">&times;</button>
+        </div>
+        <div class="drawer-body" id="drawerBody">
+            <!-- Injected by JS -->
+        </div>
+    </aside>
+    
+    <!-- ==================== FOOTER ==================== -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">MIQUEL HUETE</div>
+                
+                <div class="social-links">
+                    <a href="https://linkedin.com/in/miquel-huete-tabernero" class="social-link" target="_blank" title="LinkedIn">
+                        <span>in</span>
+                    </a>
+                    <a href="https://github.com/miquelht13" class="social-link" target="_blank" title="GitHub">
+                        <span>gh</span>
+                    </a>
+                    <a href="mailto:miquelhuetab@gmail.com" class="social-link" title="Email">
+                        <span>@</span>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p data-i18n="footer.copyright">&copy; 2026 Miquel Huete Tabernero. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script>
+
+    // ==================== TRANSLATIONS (ES / EN only) ====================
+    const translations = {
+        es: {
+            nav: { home:"Inicio", about:"Sobre Mí", skills:"Skills", portfolio:"Proyectos", contact:"Contacto" },
+            hero: {
+                label: "Ingeniero de Sistemas Aeroespaciales",
+                subtitle: "Especialista UAS | Experto en Tecnología de Drones",
+                description: "Transformando la aviación del futuro a través de sistemas no tripulados innovadores. Experiencia internacional en desarrollo de soluciones autónomas y seguridad operacional.",
+                cta_projects: "Ver Proyectos", cta_contact: "Contactar",
+                profile_placeholder: "[INSERTAR TU FOTO DE PERFIL AQUÍ]<br><br>Formato recomendado: 800x800px, JPG/PNG"
+            },
+            about: {
+                label: "Conóceme", title: "Sobre Mí",
+                text1: "Soy un <strong>Ingeniero de Sistemas Aeroespaciales</strong> especializado en Sistemas de Aeronaves No Tripuladas (UAS) con experiencia práctica en tecnología de drones, operaciones U-Space y seguridad aeronáutica. Mi trayectoria profesional combina desarrollo técnico innovador con gestión de proyectos y cumplimiento normativo.",
+                text2: "Actualmente trabajo en <strong>Telespazio Ibérica</strong> como Software Analyst, donde lidero proyectos críticos como EXTINCIA (sistemas de detección de conflictos para emergencias forestales) e ISSEC (operaciones U-Space). Mi experiencia internacional en <strong>Alemania</strong> (Dronivo GmbH) me permitió desarrollar soluciones de alto rendimiento integrando comunicación satelital Starlink con sistemas ArduPilot.",
+                text3: "Mi pasión es crear soluciones que empujen los límites de lo posible en aviación autónoma, siempre con un enfoque en seguridad, innovación y excelencia operacional.",
+                stat1: "Años de Experiencia", stat4: "Licencias de Piloto"
+            },
+            skills: {
+                label: "Competencias", title: "Habilidades Técnicas",
+                cat1_title:"UAS & Aviation", cat2_title:"Programming & Software",
+                cat3_title:"Engineering & Design", cat4_title:"Algorithms & Analysis",
+                cat5_title:"Project Management", cat6_title:"Languages",
+                lang_spanish:"Español (Nativo)", lang_catalan:"Catalán (Nativo)",
+                lang_english:"Inglés (B2)", lang_french:"Francés (B1)"
+            },
+            portfolio: {
+                label:"Trabajos Destacados", title:"Portfolio de Proyectos",
+                professional_title:"💼 Proyectos Profesionales",
+                academic_title:"🎓 Proyectos Académicos",
+                master_subtitle:"Máster en UAS",
+                bachelor_subtitle:"Grado en Ingeniería de Sistemas Aeroespaciales",
+                p1_category:"Sistemas de Respuesta a Emergencias", p1_title:"EXTINCIA - Sistema CD&R para Incendios",
+                p1_description:"Sistema integral de Detección y Resolución de Conflictos para operaciones UAS en escenarios de emergencia. Incluye simulador RADAR, tracking con filtros IMM-EKF avanzados, y predicción de trayectorias para prevenir colisiones UAS-to-UAS y VFR-to-UAS durante operaciones de extinción de incendios forestales.",
+                p2_category:"Innovación en I+D", p2_title:"UAS de Alcance Ilimitado con Starlink",
+                p2_description:"Desarrollo de solución de vehículo no tripulado de alto rendimiento integrando comunicación satelital Starlink con ecosistema ArduPilot-Pixhawk. Permite operaciones sin límite de distancia para aplicaciones aéreas personalizables. Incluye integración de gimbal Gremsy y cámara Sony ILX-LR1.",
+                p3_category:"Visión por Computador", p3_title:"Sistema de Tracking C-UAS",
+                p3_description:"Sistema de tracking de drones utilizando servomotores, Raspberry Pi 4 con PiCamera, e implementación de modelo YOLOv11 entrenado con Roboflow. Detección y seguimiento en tiempo real de aeronaves no tripuladas con capacidad de rastreo automático.",
+                p4_category:"Operaciones Aeronáuticas", p4_title:"Calculador de Altura CTR Aeroportuario",
+                p4_description:"Aplicación MATLAB que utiliza datos LiDAR de elevación del terreno y Obstacle Limitation Surface (OLS) para calcular automáticamente la altura máxima permisible de vuelo de drones en los alrededores del CTR del aeropuerto de Barcelona-El Prat (LEBL), optimizando procesos de autorización.",
+                p5_category:"Seguridad y Cumplimiento", p5_title:"SORA Entrega Médica en Andorra",
+                p5_description:"Evaluación SORA (Specific Operations Risk Assessment) completa para operaciones de entrega de suministros médicos entre hospital y pista de esquí en región montañosa de Andorra. Análisis de viabilidad y seguridad para transporte de sangre, medicamentos y materiales quirúrgicos.",
+                p6_category:"Gestión de Tráfico Aéreo", p6_title:"Decodificador ASTERIX de Tráfico Aéreo",
+                p6_description:"Aplicación Visual C# capaz de decodificar archivos binarios ASTERIX Category y plotear rutas de aeronaves en mapa satelital de Google. Incluye simulación en tiempo real de tráfico aéreo en LEBL, visualización de datos de vuelo, y exportación de rutas a formato KML.",
+                p7_category:"Sistemas Autónomos", p7_title:"Sistema Autónomo Hexsoon Edu450",
+                p7_description:"Sistema UAS autónomo basado en detección de colores en baldosas terrestres. Configuración de Raspberry Pi para vuelo autónomo según puntos cardinales detectados por color, incluyendo entrega automatizada de paquetes y vuelo de retorno mediante waypoints guardados.",
+                p8_category:"Seguridad de Vuelo", p8_title:"Algoritmo de Prevención de Colisiones",
+                p8_description:"Algoritmo de prevención de colisiones entre aeronaves desarrollado en Python. Sistema de resolución de conflictos basado en trayectorias predichas y maniobras de evasión automáticas para garantizar separación mínima segura entre aeronaves.",
+                view_details:"Ver detalles", view_github:"Ver en GitHub"
+            },
+            contact: {
+                label:"Hablemos", title:"Contacto",
+                intro:"¿Interesado en colaborar en proyectos de UAS, desarrollo aeroespacial o tecnología de drones? Estoy abierto a nuevas oportunidades y conversaciones. No dudes en contactarme.",
+                phone_label:"Teléfono"
+            },
+            map: {
+                title:"🌍 Trayectoria Profesional Internacional",
+                instructions:"💡 <strong>Interactúa con el mapa:</strong> Haz clic sobre <strong>España</strong> o <strong>Alemania</strong> para ver los detalles de experiencia en cada país."
+            },
+            footer: { copyright:"© 2026 Miquel Huete Tabernero. Todos los derechos reservados." }
+        },
+        en: {
+            nav: { home:"Home", about:"About", skills:"Skills", portfolio:"Projects", contact:"Contact" },
+            hero: {
+                label: "Aerospace Systems Engineer",
+                subtitle: "UAS Specialist | Drone Technology Expert",
+                description: "Transforming the future of aviation through innovative unmanned systems. International experience in developing autonomous solutions and operational safety.",
+                cta_projects: "View Projects", cta_contact: "Contact",
+                profile_placeholder: "[INSERT YOUR PROFILE PHOTO HERE]<br><br>Recommended format: 800x800px, JPG/PNG"
+            },
+            about: {
+                label: "Get to Know Me", title: "About Me",
+                text1: "I am an <strong>Aerospace Systems Engineer</strong> specializing in Unmanned Aircraft Systems (UAS) with hands-on experience in drone technology, U-Space operations, and aviation safety. My professional trajectory combines innovative technical development with project management and regulatory compliance.",
+                text2: "I currently work at <strong>Telespazio Ibérica</strong> as a Software Analyst, where I lead critical projects such as EXTINCIA (conflict detection systems for forest fire emergencies) and ISSEC (U-Space operations). My international experience in <strong>Germany</strong> (Dronivo GmbH) allowed me to develop high-performance solutions integrating Starlink satellite communication with ArduPilot systems.",
+                text3: "My passion is creating solutions that push the boundaries of what is possible in autonomous aviation, always with a focus on safety, innovation, and operational excellence.",
+                stat1: "Years of Experience", stat4: "Pilot Licenses"
+            },
+            skills: {
+                label: "Competencies", title: "Technical Skills",
+                cat1_title:"UAS & Aviation", cat2_title:"Programming & Software",
+                cat3_title:"Engineering & Design", cat4_title:"Algorithms & Analysis",
+                cat5_title:"Project Management", cat6_title:"Languages",
+                lang_spanish:"Spanish (Native)", lang_catalan:"Catalan (Native)",
+                lang_english:"English (B2)", lang_french:"French (B1)"
+            },
+            portfolio: {
+                label:"Featured Work", title:"Project Portfolio",
+                professional_title:"💼 Professional Projects",
+                academic_title:"🎓 Academic Projects",
+                master_subtitle:"Master's in UAS",
+                bachelor_subtitle:"Bachelor's in Aerospace Systems Engineering",
+                p1_category:"Emergency Response Systems", p1_title:"EXTINCIA - Forest Fire CD&R System",
+                p1_description:"Comprehensive Conflict Detection and Resolution system for UAS operations in emergency scenarios. Includes RADAR simulator, tracking with advanced IMM-EKF filters, and trajectory prediction to prevent UAS-to-UAS and VFR-to-UAS collisions during forest fire fighting operations.",
+                p2_category:"R&D Innovation", p2_title:"Unlimited-Range UAS with Starlink",
+                p2_description:"Development of high-performance unmanned vehicle solution integrating Starlink satellite communication with ArduPilot-Pixhawk ecosystem. Enables unlimited-range operations for customizable aerial applications. Includes Gremsy gimbal and Sony ILX-LR1 camera integration.",
+                p3_category:"Computer Vision", p3_title:"C-UAS Drone Tracking System",
+                p3_description:"Drone tracking system using servo motors, Raspberry Pi 4 with PiCamera, and YOLOv11 model implementation trained with Roboflow. Real-time detection and tracking of unmanned aircraft with automatic tracking capability.",
+                p4_category:"Aviation Operations", p4_title:"Airport CTR Drone Height Calculator",
+                p4_description:"MATLAB application that uses LiDAR terrain elevation data and Obstacle Limitation Surface (OLS) to automatically calculate maximum permissible drone flight height in the surroundings of Barcelona-El Prat Airport (LEBL) CTR, streamlining authorization processes.",
+                p5_category:"Safety & Compliance", p5_title:"SORA Medical Delivery in Andorra",
+                p5_description:"Complete SORA (Specific Operations Risk Assessment) for medical supply delivery operations between hospital and ski slope in mountainous Andorra region. Feasibility and safety analysis for transport of blood, medications, and surgical materials.",
+                p6_category:"Air Traffic Management", p6_title:"ASTERIX Air Traffic Decoder",
+                p6_description:"Visual C# application capable of decoding ASTERIX Category binary files and plotting aircraft routes on Google satellite maps. Includes real-time air traffic simulation at LEBL, flight data visualization, and route export to KML format.",
+                p7_category:"Autonomous Systems", p7_title:"Hexsoon Edu450 Autonomous System",
+                p7_description:"Autonomous UAS system based on color detection on ground tiles. Raspberry Pi configuration for autonomous flight according to cardinal points detected by color, including automated package delivery and return flight using saved waypoints.",
+                p8_category:"Flight Safety", p8_title:"Aircraft Collision Avoidance Algorithm",
+                p8_description:"Aircraft collision prevention algorithm developed in Python. Conflict resolution system based on predicted trajectories and automatic evasion maneuvers to ensure minimum safe separation between aircraft.",
+                view_details:"View details", view_github:"View on GitHub"
+            },
+            contact: {
+                label:"Let's Talk", title:"Contact",
+                intro:"Interested in collaborating on UAS projects, aerospace development, or drone technology? I am open to new opportunities and conversations. Do not hesitate to reach out.",
+                phone_label:"Phone"
+            },
+            map: {
+                title:"🌍 International Professional Journey",
+                instructions:"💡 <strong>Interact with the map:</strong> Click on <strong>Spain</strong> or <strong>Germany</strong> to see the work experience details for each country."
+            },
+            footer: { copyright:"© 2026 Miquel Huete Tabernero. All rights reserved." }
+        }
+    };
+
+    // ==================== PROJECT DRAWER DATA ====================
+    // To add a new project: add an entry to projectData with its id, media, and bilingual content.
+    const projectData = {
+        p1: {
+            es: {
+                category: "Sistemas de Respuesta a Emergencias",
+                title: "EXTINCIA — Sistema CD&R para Incendios Forestales",
+                description: `Sistema integral de Detección y Resolución de Conflictos (CD&R) diseñado para operaciones UAS en escenarios de emergencias forestales, desarrollado en Telespazio Ibérica.
+
+Incluye un simulador RADAR completamente funcional, algoritmos de tracking multi-objetivo basados en filtros IMM-EKF (Interacting Multiple Model Extended Kalman Filter), y un módulo de predicción de trayectorias. El sistema es capaz de anticipar y resolver colisiones UAS-to-UAS y VFR-to-UAS durante operaciones activas de extinción de incendios, garantizando la separación segura en espacio aéreo no segregado.
+
+El proyecto forma parte del ecosistema U-Space e ISSEC de Telespazio, y está alineado con los estándares regulatorios de EASA para operaciones en espacio aéreo de categoría específica.`,
+                tech: ["Python", "IMM-EKF", "RADAR Simulation", "U-Space", "CD&R", "Trajectory Prediction"]
+            },
+            en: {
+                category: "Emergency Response Systems",
+                title: "EXTINCIA — Forest Fire CD&R System",
+                description: `Comprehensive Conflict Detection and Resolution (CD&R) system designed for UAS operations in forest fire emergency scenarios, developed at Telespazio Ibérica.
+
+Includes a fully functional RADAR simulator, multi-target tracking algorithms based on IMM-EKF (Interacting Multiple Model Extended Kalman Filter) filters, and a trajectory prediction module. The system can anticipate and resolve UAS-to-UAS and VFR-to-UAS collisions during active firefighting operations, ensuring safe separation in non-segregated airspace.
+
+The project is part of Telespazio's U-Space and ISSEC ecosystem, aligned with EASA regulatory standards for specific category airspace operations.`,
+                tech: ["Python", "IMM-EKF", "RADAR Simulation", "U-Space", "CD&R", "Trajectory Prediction"]
+            },
+            media: { type: "placeholder", text: "EXTINCIA — CD&R / RADAR / Tracking System" }
+        },
+        p2: {
+            es: {
+                category: "Innovación en I+D",
+                title: "UAS de Alcance Ilimitado con Starlink",
+                description: `Proyecto de I+D desarrollado en Dronivo GmbH (Alemania) para crear un sistema de vehículo aéreo no tripulado de alto rendimiento capaz de operar sin restricciones de distancia.
+
+La solución integra comunicación satelital Starlink directamente con el ecosistema ArduPilot-Pixhawk, permitiendo telemetría y control de video en tiempo real desde cualquier punto del planeta. Incluye diseño e impresión 3D de soporte personalizado para la antena Starlink Mini, integración del gimbal estabilizador Gremsy con cámara Sony ILX-LR1 de alta resolución, y desarrollo de scripts de configuración en Linux para enrutamiento de red.
+
+Resultado: primer prototipo funcional de la empresa con capacidad de vuelo BVLoS (Beyond Visual Line of Sight) mediante conectividad satelital.`,
+                tech: ["ArduPilot", "Pixhawk", "Starlink", "System Integration", "CAD/Fusion 360", "3D Printing", "Linux"]
+            },
+            en: {
+                category: "R&D Innovation",
+                title: "Unlimited-Range UAS with Starlink",
+                description: `R&D project developed at Dronivo GmbH (Germany) to create a high-performance unmanned aerial vehicle system capable of operating without distance restrictions.
+
+The solution integrates Starlink satellite communication directly with the ArduPilot-Pixhawk ecosystem, enabling real-time telemetry and video control from anywhere on the planet. Includes custom 3D design and printing of a Starlink Mini antenna mount, integration of the Gremsy stabilizer gimbal with high-resolution Sony ILX-LR1 camera, and development of Linux configuration scripts for network routing.
+
+Result: company's first functional prototype with BVLoS (Beyond Visual Line of Sight) flight capability via satellite connectivity.`,
+                tech: ["ArduPilot", "Pixhawk", "Starlink", "System Integration", "CAD/Fusion 360", "3D Printing", "Linux"]
+            },
+            media: { type: "placeholder", text: "Dronivo — Starlink + ArduPilot Integration" }
+        },
+        p4: {
+            es: {
+                category: "Operaciones Aeronáuticas",
+                title: "Calculador de Altura CTR Aeroportuario (ENAIRE)",
+                description: `Aplicación desarrollada durante prácticas en ENAIRE para optimizar el proceso de autorización de vuelos de drones en el entorno del aeropuerto de Barcelona-El Prat (LEBL).
+
+Utiliza datos LiDAR de alta resolución para modelar la elevación del terreno y la infraestructura urbana, combinados con las Obstacle Limitation Surfaces (OLS) oficiales del aeropuerto, para calcular automáticamente la altura máxima de vuelo permisible en cualquier punto georreferenciado dentro del CTR.
+
+La herramienta reduce de horas a segundos el análisis que antes realizaban los operadores manualmente, mejorando la precisión y trazabilidad de las autorizaciones de vuelo.`,
+                tech: ["MATLAB", "LiDAR Data Processing", "Aviation Regulations", "OLS", "Geospatial Analysis"]
+            },
+            en: {
+                category: "Aviation Operations",
+                title: "Airport CTR Drone Height Calculator (ENAIRE)",
+                description: `Application developed during an internship at ENAIRE to streamline the drone flight authorization process around Barcelona-El Prat Airport (LEBL).
+
+Uses high-resolution LiDAR data to model terrain elevation and urban infrastructure, combined with the airport's official Obstacle Limitation Surfaces (OLS), to automatically calculate the maximum permissible flight altitude at any georeferenced point within the CTR.
+
+The tool reduces from hours to seconds the analysis that operators previously performed manually, improving the accuracy and traceability of flight authorizations.`,
+                tech: ["MATLAB", "LiDAR Data Processing", "Aviation Regulations", "OLS", "Geospatial Analysis"]
+            },
+            media: { type: "placeholder", text: "ENAIRE — MATLAB App / LiDAR Analysis" }
+        },
+        p3: {
+            es: {
+                category: "Visión por Computador",
+                title: "Sistema de Tracking C-UAS",
+                description: `Sistema de contramedidas anti-dron (C-UAS) basado en visión artificial, desarrollado como proyecto transversal del Máster en UAS.
+
+Hardware: Raspberry Pi 4 con PiCamera, montada sobre una plataforma de dos ejes controlada por servomotores. Software: modelo de detección YOLOv11 personalizado, entrenado con un dataset propio creado y etiquetado en Roboflow, desplegado con inferencia en tiempo real.
+
+El sistema detecta drones en el campo visual y activa el servo-tracking para mantener el objetivo centrado en frame, logrando seguimiento continuo con latencias inferiores a 100ms. Proyecto de código abierto disponible en GitHub.`,
+                tech: ["YOLOv11", "Python", "Raspberry Pi 4", "PiCamera", "Computer Vision", "Roboflow", "Servo Control"]
+            },
+            en: {
+                category: "Computer Vision",
+                title: "C-UAS Drone Tracking System",
+                description: `Anti-drone countermeasure (C-UAS) system based on computer vision, developed as a transversal project during the Master's in UAS.
+
+Hardware: Raspberry Pi 4 with PiCamera, mounted on a two-axis platform controlled by servomotors. Software: custom YOLOv11 detection model, trained with a proprietary dataset created and labeled in Roboflow, deployed with real-time inference.
+
+The system detects drones in the visual field and activates servo-tracking to keep the target centered in frame, achieving continuous tracking with latencies below 100ms. Open-source project available on GitHub.`,
+                tech: ["YOLOv11", "Python", "Raspberry Pi 4", "PiCamera", "Computer Vision", "Roboflow", "Servo Control"]
+            },
+            media: { type: "placeholder", text: "C-UAS — Computer Vision / Tracking System" },
+            github: "https://github.com/miquelht13/MED-TransversalProject/tree/main"
+        },
+        p5: {
+            es: {
+                category: "Seguridad y Cumplimiento",
+                title: "SORA — Entrega Médica en Andorra",
+                description: `Evaluación SORA (Specific Operations Risk Assessment) completa y detallada para una operación de entrega de suministros médicos urgentes en la región montañosa de Andorra.
+
+La operación analizada consiste en el transporte autónomo de sangre, medicamentos de emergencia y materiales quirúrgicos entre el Hospital Nostra Senyora de Meritxell y una pista de esquí de alta montaña, con altitudes de operación superiores a 2.000m MSL y condiciones meteorológicas adversas potenciales.
+
+El estudio abarca: definición del ConOps, análisis GRC (Ground Risk Class) y ARC (Air Risk Class), determinación del nivel SAIL, definición de OSO (Operational Safety Objectives) aplicables, y propuesta de mitigaciones. Conclusión: viabilidad SAIL IV con mitigaciones específicas de montaña.`,
+                tech: ["SORA Methodology", "Risk Assessment", "UAS Operations", "EASA Regulations", "ConOps Design"]
+            },
+            en: {
+                category: "Safety & Compliance",
+                title: "SORA — Medical Delivery in Andorra",
+                description: `Complete and detailed SORA (Specific Operations Risk Assessment) for an urgent medical supply delivery operation in the mountainous Andorra region.
+
+The analyzed operation consists of autonomous transport of blood, emergency medications, and surgical materials between Hospital Nostra Senyora de Meritxell and a high-altitude ski resort, with operating altitudes above 2,000m MSL and potentially adverse weather conditions.
+
+The study covers: ConOps definition, GRC (Ground Risk Class) and ARC (Air Risk Class) analysis, SAIL level determination, applicable OSO (Operational Safety Objectives) definition, and mitigation proposals. Conclusion: SAIL IV feasibility with mountain-specific mitigations.`,
+                tech: ["SORA Methodology", "Risk Assessment", "UAS Operations", "EASA Regulations", "ConOps Design"]
+            },
+            media: { type: "placeholder", text: "SORA Assessment — Medical Delivery / Andorra" }
+        },
+        p7: {
+            es: {
+                category: "Sistemas Autónomos",
+                title: "Sistema Autónomo Hexsoon Edu450",
+                description: `Proyecto de grado que implementa un sistema de vuelo completamente autónomo sobre el drone educativo Hexsoon EDU-450, basado en detección de marcadores de colores en el suelo.
+
+El sistema utiliza una cámara downward-facing conectada a una Raspberry Pi que procesa el video en tiempo real con OpenCV. Cada color de baldosa representa un comando de navegación (Norte/Sur/Este/Oeste/Aterrizar/Entregar paquete). El autopilot ArduPilot ejecuta los comandos mediante comunicación MAVLink.
+
+Funcionalidades adicionales: sistema de entrega de carga útil controlado por servo, almacenamiento de waypoints para trayectoria de retorno automático y modo de recuperación de emergencia.`,
+                tech: ["ArduPilot", "MAVLink", "Python", "OpenCV", "Raspberry Pi", "Color Detection", "Autonomous Flight"]
+            },
+            en: {
+                category: "Autonomous Systems",
+                title: "Hexsoon Edu450 Autonomous System",
+                description: `Degree project implementing a fully autonomous flight system on the Hexsoon EDU-450 educational drone, based on color marker detection on the ground.
+
+The system uses a downward-facing camera connected to a Raspberry Pi that processes video in real-time with OpenCV. Each tile color represents a navigation command (North/South/East/West/Land/Deliver package). The ArduPilot autopilot executes commands via MAVLink communication.
+
+Additional features: servo-controlled payload delivery system, waypoint storage for automatic return trajectory, and emergency recovery mode.`,
+                tech: ["ArduPilot", "MAVLink", "Python", "OpenCV", "Raspberry Pi", "Color Detection", "Autonomous Flight"]
+            },
+            media: { type: "placeholder", text: "Hexsoon EDU-450 — Autonomous Flight / Color Detection" }
+        },
+        p6: {
+            es: {
+                category: "Gestión de Tráfico Aéreo",
+                title: "Decodificador ASTERIX de Tráfico Aéreo",
+                description: `Aplicación de escritorio desarrollada en Visual C# (.NET) capaz de decodificar y visualizar datos ASTERIX (All Purpose STructured Eurocontrol SuRveillance Information eXchange) de radar secundario.
+
+Funcionalidades principales: decodificación de archivos binarios ASTERIX Category 048 (radar monoradar), representación cartográfica de trayectorias de aeronaves en mapa satelital de Google Maps API, simulación en tiempo real del tráfico aéreo de llegadas y salidas en el aeropuerto LEBL, visualización de etiquetas con datos de vuelo (código, altitud, velocidad), y exportación de trayectorias a formato KML compatible con Google Earth.
+
+Desarrollado como proyecto de la asignatura de Gestión del Tráfico Aéreo.`,
+                tech: ["C#", ".NET", "Visual Studio", "ASTERIX Cat.048", "Google Maps API", "KML Export", "Data Visualization"]
+            },
+            en: {
+                category: "Air Traffic Management",
+                title: "ASTERIX Air Traffic Decoder",
+                description: `Desktop application developed in Visual C# (.NET) capable of decoding and visualizing ASTERIX (All Purpose STructured Eurocontrol SuRveillance Information eXchange) secondary radar data.
+
+Main features: decoding of ASTERIX Category 048 binary files (mono-radar), cartographic representation of aircraft trajectories on Google Maps API satellite map, real-time simulation of arrivals and departures air traffic at LEBL airport, flight data label visualization (code, altitude, speed), and trajectory export to KML format compatible with Google Earth.
+
+Developed as a project for the Air Traffic Management course.`,
+                tech: ["C#", ".NET", "Visual Studio", "ASTERIX Cat.048", "Google Maps API", "KML Export", "Data Visualization"]
+            },
+            media: { type: "placeholder", text: "ASTERIX Decoder — Air Traffic Visualization / LEBL" }
+        },
+        p8: {
+            es: {
+                category: "Seguridad de Vuelo",
+                title: "Algoritmo de Prevención de Colisiones",
+                description: `Sistema de detección y resolución de conflictos entre aeronaves implementado íntegramente en Python, desarrollado para la asignatura de Navegación Aérea.
+
+El algoritmo recibe las posiciones y vectores de velocidad de múltiples aeronaves, identifica pares en conflicto (proyección de trayectorias con separación inferior al mínimo reglamentario), y calcula maniobras de evasión óptimas que restauren la separación mínima segura con el menor cambio de rumbo posible.
+
+Implementa métricas de separación horizontal y vertical, manejo de conflictos múltiples simultáneos con priorización, y visualización gráfica del espacio aéreo con trayectorias originales y modificadas.`,
+                tech: ["Python", "NumPy", "Matplotlib", "Conflict Detection", "Trajectory Planning", "Aviation Safety"]
+            },
+            en: {
+                category: "Flight Safety",
+                title: "Aircraft Collision Avoidance Algorithm",
+                description: `Aircraft conflict detection and resolution system implemented entirely in Python, developed for the Air Navigation course.
+
+The algorithm receives positions and velocity vectors of multiple aircraft, identifies conflicting pairs (trajectory projections with separation below the regulatory minimum), and calculates optimal evasion maneuvers that restore minimum safe separation with the smallest possible heading change.
+
+Implements horizontal and vertical separation metrics, simultaneous multiple conflict handling with prioritization, and graphical visualization of the airspace with original and modified trajectories.`,
+                tech: ["Python", "NumPy", "Matplotlib", "Conflict Detection", "Trajectory Planning", "Aviation Safety"]
+            },
+            media: { type: "placeholder", text: "Collision Avoidance — Python Algorithm / Safety System" }
+        }
+    };
+
+    // ==================== LANGUAGE SYSTEM ====================
+    let currentLanguage = localStorage.getItem('preferredLanguage') || 'es';
+    if (currentLanguage !== 'es' && currentLanguage !== 'en') currentLanguage = 'es';
+
+    function getNestedValue(obj, keyPath) {
+        return keyPath.split('.').reduce((o, k) => (o && o[k] !== undefined) ? o[k] : null, obj);
+    }
+
+    function setLanguage(lang) {
+        if (lang !== 'es' && lang !== 'en') return;
+        currentLanguage = lang;
+        localStorage.setItem('preferredLanguage', lang);
+        document.documentElement.lang = lang;
+
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const val = getNestedValue(translations[lang], el.getAttribute('data-i18n'));
+            if (val !== null) el.textContent = val;
+        });
+
+        document.querySelectorAll('[data-i18n-html]').forEach(el => {
+            const val = getNestedValue(translations[lang], el.getAttribute('data-i18n-html'));
+            if (val !== null) el.innerHTML = val;
+        });
+
+        // Update all lang-toggle-btn active states
+        document.querySelectorAll('.lang-toggle-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.lang === lang);
+        });
+    }
+
+    // Init lang on load
+    setLanguage(currentLanguage);
+
+    // Wire all lang-toggle-btn buttons (desktop + mobile)
+    document.querySelectorAll('.lang-toggle-btn').forEach(btn => {
+        btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+    });
+
+    // ==================== PROJECT DRAWER ====================
+    const drawerOverlay = document.getElementById('drawerOverlay');
+    const projectDrawer = document.getElementById('projectDrawer');
+    const drawerClose   = document.getElementById('drawerClose');
+    const drawerBody    = document.getElementById('drawerBody');
+
+    function openDrawer(projectId) {
+        const lang = currentLanguage;
+        const data = projectData[projectId];
+        if (!data) return;
+
+        const d = data[lang];
+        document.getElementById('drawerCategory').textContent = d.category;
+        document.getElementById('drawerTitle').textContent    = d.title;
+
+        // Build media block
+        let mediaHTML = '';
+        const media = data.media;
+        if (media.type === 'image') {
+            mediaHTML = `<div class="drawer-media"><img src="${media.src}" alt="${d.title}"></div>`;
+        } else if (media.type === 'youtube') {
+            // Expected media.videoId = "dQw4w9WgXcQ"
+            mediaHTML = `<div class="drawer-media">
+                <iframe src="https://www.youtube.com/embed/${media.videoId}" allowfullscreen title="${d.title}"></iframe>
+            </div>`;
+        } else {
+            mediaHTML = `<div class="drawer-media"><div class="drawer-media-placeholder">
+                <div style="font-size:2rem;margin-bottom:0.75rem">🚁</div>
+                <div>${media.text || 'Media placeholder'}</div>
+                <div style="font-size:0.78rem;margin-top:0.5rem;opacity:0.5">Replace <code>media</code> in projectData to show an image or YouTube video</div>
+            </div></div>`;
+        }
+
+        // Build description (preserve newlines)
+        const descHTML = d.description.split('\n\n').map(p => `<p class="drawer-description">${p.replace(/\n/g,'<br>')}</p>`).join('');
+
+        // Tech tags
+        const tagsHTML = (d.tech || []).map(t => `<span class="tech-badge">${t}</span>`).join('');
+
+        // Optional GitHub link
+        const ghLink = data.github
+            ? `<a href="${data.github}" class="drawer-github-link" target="_blank" rel="noopener">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58l-.01-2.23c-3.34.73-4.04-1.61-4.04-1.61-.54-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.31-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.13 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.25 2.87.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.49 5.92.43.37.82 1.1.82 2.22l-.01 3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                GitHub
+              </a>`
+            : '';
+
+        drawerBody.innerHTML = mediaHTML + descHTML + `<div class="drawer-tech-label">Tech Stack</div><div class="drawer-tech-tags">${tagsHTML}</div>` + ghLink;
+
+        drawerOverlay.classList.add('active');
+        projectDrawer.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        drawerClose.focus();
+    }
+
+    function closeDrawer() {
+        drawerOverlay.classList.remove('active');
+        projectDrawer.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    drawerClose.addEventListener('click', closeDrawer);
+    drawerOverlay.addEventListener('click', closeDrawer);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+
+    // Delegate click on all drawer-trigger links
+    document.addEventListener('click', e => {
+        const trigger = e.target.closest('.drawer-trigger');
+        if (trigger) {
+            e.preventDefault();
+            openDrawer(trigger.dataset.project);
+        }
+    });
+
+    // ==================== SMOOTH SCROLL ====================
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            if (this.classList.contains('drawer-trigger')) return;
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                navLinks.classList.remove('active');
+                menuToggle.classList.remove('active');
+            }
+        });
+    });
+
+    // ==================== HEADER SCROLL EFFECT ====================
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+        header.classList.toggle('scrolled', window.scrollY > 100);
+    });
+
+    // ==================== MOBILE MENU ====================
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks   = document.getElementById('navLinks');
+
+    menuToggle.addEventListener('click', () => {
+        menuToggle.classList.toggle('active');
+        navLinks.classList.toggle('active');
+    });
+
+    document.addEventListener('click', e => {
+        if (!menuToggle.contains(e.target) && !navLinks.contains(e.target)) {
+            menuToggle.classList.remove('active');
+            navLinks.classList.remove('active');
+        }
+    });
+
+    if (window.innerWidth <= 768) {
+        const mobileLangToggle = document.getElementById('langToggleMobile');
+        if (mobileLangToggle) mobileLangToggle.style.display = 'flex';
+    }
+
+    // ==================== SCROLL ANIMATIONS ====================
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // ==================== PROJECT CARD HOVER ====================
+    document.querySelectorAll('.project-card').forEach(card => {
+        card.addEventListener('mouseenter', function() { this.style.transform = 'translateY(-10px) scale(1.02)'; });
+        card.addEventListener('mouseleave', function() { this.style.transform = 'translateY(0) scale(1)'; });
+    });
+
+    // ==================== LEAFLET MAP ====================
+    document.addEventListener('DOMContentLoaded', function() { initializeProfessionalMap(); });
+
+    function closeMdPanel() {
+        document.getElementById('map-details-panel').classList.remove('panel-active');
+    }
+
+    function openMdPanel(location) {
+        const panel  = document.getElementById('map-details-panel');
+        const bodyEl = document.getElementById('mdp-body-content');
+        document.getElementById('mdp-city-title').textContent    = location.name;
+        document.getElementById('mdp-country-title').textContent = location.country;
+
+        const statRows = {
+            'España':   { year: '2023–2025', orgs: '2 empresas' },
+            'Alemania': { year: '2024',       orgs: '1 empresa'  }
+        };
+        const key   = location.name;
+        const stats = statRows[key] || { year: '–', orgs: '–' };
+        let html = `<span class="mdp-status-badge">${key === 'España' ? 'Sede Actual' : 'Experiencia Internacional'}</span>`;
+        location.companies.forEach(company => {
+            html += `<div class="mdp-company-block">
+                <span class="mdp-company-name">${company.name}</span>
+                <span class="mdp-role">${company.role}</span>
+                <span class="mdp-period">${company.period}</span>
+            </div>`;
+        });
+        html += `<div class="mdp-stat-row">
+            <div class="mdp-stat"><div class="mdp-stat-label">Período</div><div class="mdp-stat-value">${stats.year}</div></div>
+            <div class="mdp-stat"><div class="mdp-stat-label">Empresas</div><div class="mdp-stat-value">${stats.orgs}</div></div>
+        </div>`;
+        bodyEl.innerHTML = html;
+        panel.classList.add('panel-active');
+    }
+
+    function initializeProfessionalMap() {
+        if (typeof L === 'undefined') { console.error('Leaflet not loaded.'); return; }
+        const mapElement = document.getElementById('professionalMap');
+        if (!mapElement) return;
+
+        const map = L.map('professionalMap', {
+            center: [50.0, 14.0], zoom: 4,
+            zoomControl:false, scrollWheelZoom:false, dragging:false,
+            touchZoom:false, doubleClickZoom:false, boxZoom:false,
+            keyboard:false, tap:false, renderer: L.canvas()
+        });
+
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; OpenStreetMap &copy; CARTO', subdomains: 'abcd', maxZoom: 19
+        }).addTo(map);
+
+        const locationData = {
+            ES: {
+                name: 'España', country: 'España 🇪🇸',
+                companies: [
+                    { name: 'Telespazio Ibérica', period: 'Oct 2024 – Presente', role: 'Software Analyst' },
+                    { name: 'ENAIRE',              period: 'Sep 2023 – Feb 2024', role: 'Engineering Intern' }
+                ]
+            },
+            DE: {
+                name: 'Alemania', country: 'Alemania 🇩🇪',
+                companies: [
+                    { name: 'Dronivo GmbH', period: 'Feb 2024 – Ago 2024', role: 'R&D UAS Engineer' }
+                ]
+            }
+        };
+
+        const defaultStyle = { color:'rgba(0,217,255,0.55)', weight:1.5, opacity:1, fillColor:'#00D9FF', fillOpacity:0.07, dashArray:'4,3' };
+        const hoverStyle   = { weight:2.5, color:'#00D9FF', fillOpacity:0.20, dashArray:'' };
+        const activeStyle  = { weight:3,   color:'#00D9FF', fillOpacity:0.32, dashArray:'' };
+
+        let spainLayer, germanyLayer, activeRegion = null;
+
+        function resetAllStyles() {
+            if (spainLayer)   spainLayer.eachLayer(l   => l.setStyle(defaultStyle));
+            if (germanyLayer) germanyLayer.eachLayer(l => l.setStyle(defaultStyle));
+            activeRegion = null;
+        }
+
+        function setupCountryLayer(layer, countryKey) {
+            layer.eachLayer(l => {
+                l.on('mouseover', () => { if (l !== activeRegion) l.setStyle(hoverStyle); });
+                l.on('mouseout',  () => { if (l !== activeRegion) l.setStyle(defaultStyle); });
+                l.on('click', e => {
+                    L.DomEvent.stopPropagation(e);
+                    if (l === activeRegion) { l.setStyle(defaultStyle); activeRegion = null; closeMdPanel(); return; }
+                    resetAllStyles();
+                    activeRegion = l;
+                    l.setStyle(activeStyle);
+                    openMdPanel(locationData[countryKey]);
+                });
+            });
+        }
+
+        fetch('https://raw.githubusercontent.com/johan/world.geo.json/master/countries/ESP.geo.json')
+            .then(r => r.ok ? r.json() : Promise.reject())
+            .then(data => { spainLayer = L.geoJSON(data, { style: defaultStyle, smoothFactor: 0.5 }).addTo(map); setupCountryLayer(spainLayer, 'ES'); })
+            .catch(() => console.warn('Could not load Spain GeoJSON'));
+
+        fetch('https://raw.githubusercontent.com/johan/world.geo.json/master/countries/DEU.geo.json')
+            .then(r => r.ok ? r.json() : Promise.reject())
+            .then(data => { germanyLayer = L.geoJSON(data, { style: defaultStyle, smoothFactor: 0.5 }).addTo(map); setupCountryLayer(germanyLayer, 'DE'); })
+            .catch(() => console.warn('Could not load Germany GeoJSON'));
+
+        map.on('click', () => { resetAllStyles(); closeMdPanel(); });
+    }
+
+    // ==================== CONSOLE EASTER EGG ====================
+    console.log('%c🚁 Miquel Huete Portfolio', 'font-size:20px;font-weight:bold;color:#00D9FF;');
+    console.log('%cGitHub: https://github.com/miquelht13', 'font-size:12px;color:#6C757D;');
+
+    </script>
+    
+</body>
+</html>
