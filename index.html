@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -383,7 +383,7 @@
             margin: 0 auto;
         }
         
-        /* <!-- ============ EDITABLE: INSERTAR TU FOTO DE PERFIL AQUÃ ============ --> */
+        /* <!-- ============ EDITABLE: INSERT YOUR PROFILE PHOTO HERE ============ --> */
         .profile-placeholder {
             width: 100%;
             aspect-ratio: 1;
@@ -412,12 +412,12 @@
             animation: rotate 20s linear infinite;
         }
         
-        /* Para cuando insertes tu imagen real, usa esta clase */
+        /* When you add your real image, use this class */
         .profile-image {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: none; /* Cambiar a block cuando tengas la imagen */
+            display: none; /* Change to block when you add your photo */
         }
         
         /* Technical decoration */
@@ -609,7 +609,7 @@
             border-color: var(--accent);
         }
         
-        /* <!-- ============ EDITABLE: IMÃGENES DE PROYECTOS ============ --> */
+        /* <!-- ============ EDITABLE: PROJECT IMAGES ============ --> */
         .project-image {
             width: 100%;
             height: 250px;
@@ -647,7 +647,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: none; /* Cambiar a block cuando tengas las imÃ¡genes */
+            display: none; /* Change to block when you add imagesÃ¡genes */
         }
         
         .project-content {
@@ -707,7 +707,7 @@
         }
         
         .project-link::after {
-            content: 'â†’';
+            content: '\2192';
             font-size: 1.2rem;
         }
         
@@ -1454,11 +1454,11 @@
             
             <div class="nav-center">
                 <ul class="nav-links" id="navLinks">
-                    <li><a href="#hero" data-i18n="nav.home">Inicio</a></li>
+                    <li><a href="#hero" data-i18n="nav.home">Home</a></li>
                     <li><a href="#about" data-i18n="nav.about">Sobre MÃ­</a></li>
                     <li><a href="#skills" data-i18n="nav.skills">Skills</a></li>
-                    <li><a href="#portfolio" data-i18n="nav.portfolio">Proyectos</a></li>
-                    <li><a href="#contact" data-i18n="nav.contact">Contacto</a></li>
+                    <li><a href="#portfolio" data-i18n="nav.portfolio">Projects</a></li>
+                    <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
                     
                     <!-- Language selector in mobile menu -->
                     <li class="lang-toggle" id="langToggleMobile" style="display:none; margin-top:1.5rem;">
@@ -1497,19 +1497,16 @@
                         Experiencia internacional en desarrollo de soluciones autÃ³nomas y seguridad operacional.
                     </p>
                     <div class="hero-cta">
-                        <a href="#portfolio" class="btn btn-primary" data-i18n="hero.cta_projects">Ver Proyectos</a>
-                        <a href="#contact" class="btn btn-secondary" data-i18n="hero.cta_contact">Contactar</a>
+                        <a href="#portfolio" class="btn btn-primary" data-i18n="hero.cta_projects">View Projects</a>
+                        <a href="#contact" class="btn btn-secondary" data-i18n="hero.cta_contact">Contact</a>
                     </div>
                 </div>
                 
                 <div class="hero-image">
                     <div class="hero-image-container">
-                        <!-- ============ EDITABLE: FOTO DE PERFIL ============ -->
-                        <div class="profile-placeholder" data-i18n-html="hero.profile_placeholder">
-                            [INSERTAR TU FOTO DE PERFIL AQUÃ]
-                            <br><br>
-                            Formato recomendado: 800x800px, JPG/PNG
-                        </div>
+                        <!-- ============ PROFILE PHOTO ============ -->
+                        <img src="profile.png" alt="Profile photo"
+                             style="width:100%; aspect-ratio:1/1; max-width:450px; display:block; margin:0 auto; object-fit:cover; object-position:center top; border-radius:50%; border:3px solid #00D9FF; box-shadow:0 0 40px rgba(0,217,255,0.25);" />
                     </div>
                     <div class="hero-decoration"></div>
                 </div>
@@ -1551,7 +1548,7 @@
                     </div>
                     <div class="stat-card fade-in">
                         <div class="stat-number">A1/A2/A3</div>
-                        <div class="stat-label" data-i18n="about.stat4">Licencias de Piloto</div>
+                        <div class="stat-label" data-i18n="about.stat4">Pilot Licenses</div>
                     </div>
                 </div>
             </div>
@@ -1575,7 +1572,7 @@
                 <div id="map-details-panel">
                     <div class="mdp-header">
                         <div class="mdp-header-text">
-                            <h2 id="mdp-city-title">Ciudad</h2>
+                            <h2 id="mdp-city-title">City</h2>
                             <span id="mdp-country-title">PaÃ­s</span>
                         </div>
                         <button class="mdp-close-btn" onclick="closeMdPanel()">&times;</button>
@@ -1599,7 +1596,7 @@
     <section id="skills">
         <div class="container">
             <div class="section-header">
-                <p class="section-label" data-i18n="skills.label">Competencias</p>
+                <p class="section-label" data-i18n="skills.label">Competencies</p>
                 <h2 class="section-title" data-i18n="skills.title">Habilidades TÃ©cnicas</h2>
             </div>
             
@@ -1683,8 +1680,8 @@
     <section id="portfolio">
         <div class="container">
             <div class="section-header">
-                <p class="section-label" data-i18n="portfolio.label">Trabajos Destacados</p>
-                <h2 class="section-title" data-i18n="portfolio.title">Portfolio de Proyectos</h2>
+                <p class="section-label" data-i18n="portfolio.label">Featured Work</p>
+                <h2 class="section-title" data-i18n="portfolio.title">Project Portfolio</h2>
             </div>
             
             <!-- PROFESSIONAL PROJECTS -->
@@ -1700,6 +1697,54 @@
                         <span data-i18n="portfolio.p1_img_placeholder">[INSERTAR IMAGEN: EXTINCIA PROJECT]<br>Sistema CD&R / RADAR / Tracking</span>
                     </div>
                     <div class="project-content">
+                        <!-- ============================================================
+                             HOW TO ADD IMAGES TO THIS PROJECT PANEL
+                             ============================================================
+                             Replace the src attribute below with your image file path.
+                             Supported formats: JPG, PNG, WebP, GIF, SVG.
+                             Example — single image:
+                             <img src="images/project-name/screenshot1.jpg"
+                                  alt="Brief description of the image"
+                                  style="max-width:100%; border-radius:8px; margin:12px 0;" />
+
+                             Example — image gallery (side by side):
+                             <div style="display:flex; gap:12px; flex-wrap:wrap; margin:12px 0;">
+                               <img src="images/project-name/img1.jpg" alt="..."
+                                    style="width:48%; border-radius:8px;" />
+                               <img src="images/project-name/img2.jpg" alt="..."
+                                    style="width:48%; border-radius:8px;" />
+                             </div>
+                             ============================================================ -->
+
+                        <!-- ============================================================
+                             HOW TO ADD LINKS (VIDEOS, WEBSITES, DEMOS, REPOS)
+                             ============================================================
+                             External website or live demo:
+                             <a href="https://your-project-url.com" target="_blank" rel="noopener">
+                               View Live Demo →
+                             </a>
+
+                             YouTube or Vimeo video (embedded):
+                             <iframe width="100%" height="315"
+                               src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+                               title="Project demo video" frameborder="0"
+                               allow="accelerometer; autoplay; clipboard-write; encrypted-media;
+                                      gyroscope; picture-in-picture"
+                               allowfullscreen
+                               style="border-radius:8px; margin:12px 0;">
+                             </iframe>
+
+                             GitHub repository:
+                             <a href="https://github.com/your-username/repo-name"
+                                target="_blank" rel="noopener">
+                               View on GitHub →
+                             </a>
+
+                             PDF or document:
+                             <a href="docs/project-report.pdf" target="_blank" rel="noopener">
+                               Download Report (PDF) →
+                             </a>
+                             ============================================================ -->
                         <span class="project-category" data-i18n="portfolio.p1_category">Emergency Response Systems</span>
                         <h3 data-i18n="portfolio.p1_title">EXTINCIA - Forest Fire CD&R System</h3>
                         <p class="project-description" data-i18n="portfolio.p1_description">
@@ -1713,8 +1758,11 @@
                             <span class="tech-badge">RADAR</span>
                             <span class="tech-badge">U-Space</span>
                             <span class="tech-badge">CD&R</span>
+                            <span class="tech-badge">MATLAB</span>
+                            <span class="tech-badge">Docker</span>
+                            <span class="tech-badge">Git</span>
                         </div>
-                        <a href="#" class="project-link drawer-trigger" data-project="p1" data-i18n="portfolio.view_details">Ver detalles</a>
+                        <a href="#" class="project-link drawer-trigger" data-project="p1" data-i18n="portfolio.view_details">View details</a>
                     </div>
                 </div>
                 
@@ -1724,6 +1772,54 @@
                         <span data-i18n="portfolio.p2_img_placeholder">[INSERTAR IMAGEN: DRONIVO PROJECT]<br>IntegraciÃ³n Starlink + ArduPilot</span>
                     </div>
                     <div class="project-content">
+                        <!-- ============================================================
+                             HOW TO ADD IMAGES TO THIS PROJECT PANEL
+                             ============================================================
+                             Replace the src attribute below with your image file path.
+                             Supported formats: JPG, PNG, WebP, GIF, SVG.
+                             Example — single image:
+                             <img src="images/project-name/screenshot1.jpg"
+                                  alt="Brief description of the image"
+                                  style="max-width:100%; border-radius:8px; margin:12px 0;" />
+
+                             Example — image gallery (side by side):
+                             <div style="display:flex; gap:12px; flex-wrap:wrap; margin:12px 0;">
+                               <img src="images/project-name/img1.jpg" alt="..."
+                                    style="width:48%; border-radius:8px;" />
+                               <img src="images/project-name/img2.jpg" alt="..."
+                                    style="width:48%; border-radius:8px;" />
+                             </div>
+                             ============================================================ -->
+
+                        <!-- ============================================================
+                             HOW TO ADD LINKS (VIDEOS, WEBSITES, DEMOS, REPOS)
+                             ============================================================
+                             External website or live demo:
+                             <a href="https://your-project-url.com" target="_blank" rel="noopener">
+                               View Live Demo →
+                             </a>
+
+                             YouTube or Vimeo video (embedded):
+                             <iframe width="100%" height="315"
+                               src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+                               title="Project demo video" frameborder="0"
+                               allow="accelerometer; autoplay; clipboard-write; encrypted-media;
+                                      gyroscope; picture-in-picture"
+                               allowfullscreen
+                               style="border-radius:8px; margin:12px 0;">
+                             </iframe>
+
+                             GitHub repository:
+                             <a href="https://github.com/your-username/repo-name"
+                                target="_blank" rel="noopener">
+                               View on GitHub →
+                             </a>
+
+                             PDF or document:
+                             <a href="docs/project-report.pdf" target="_blank" rel="noopener">
+                               Download Report (PDF) →
+                             </a>
+                             ============================================================ -->
                         <span class="project-category" data-i18n="portfolio.p2_category">R&D Innovation</span>
                         <h3 data-i18n="portfolio.p2_title">Unlimited-Range UAS with Starlink</h3>
                         <p class="project-description" data-i18n="portfolio.p2_description">
@@ -1738,7 +1834,7 @@
                             <span class="tech-badge">CAD</span>
                             <span class="tech-badge">3D Printing</span>
                         </div>
-                        <a href="#" class="project-link drawer-trigger" data-project="p2" data-i18n="portfolio.view_details">Ver detalles</a>
+                        <a href="#" class="project-link drawer-trigger" data-project="p2" data-i18n="portfolio.view_details">View details</a>
                     </div>
                 </div>
                 
@@ -1748,6 +1844,54 @@
                         <span data-i18n="portfolio.p4_img_placeholder">[INSERTAR IMAGEN: ENAIRE APP]<br>MATLAB Application / LiDAR Analysis</span>
                     </div>
                     <div class="project-content">
+                        <!-- ============================================================
+                             HOW TO ADD IMAGES TO THIS PROJECT PANEL
+                             ============================================================
+                             Replace the src attribute below with your image file path.
+                             Supported formats: JPG, PNG, WebP, GIF, SVG.
+                             Example — single image:
+                             <img src="images/project-name/screenshot1.jpg"
+                                  alt="Brief description of the image"
+                                  style="max-width:100%; border-radius:8px; margin:12px 0;" />
+
+                             Example — image gallery (side by side):
+                             <div style="display:flex; gap:12px; flex-wrap:wrap; margin:12px 0;">
+                               <img src="images/project-name/img1.jpg" alt="..."
+                                    style="width:48%; border-radius:8px;" />
+                               <img src="images/project-name/img2.jpg" alt="..."
+                                    style="width:48%; border-radius:8px;" />
+                             </div>
+                             ============================================================ -->
+
+                        <!-- ============================================================
+                             HOW TO ADD LINKS (VIDEOS, WEBSITES, DEMOS, REPOS)
+                             ============================================================
+                             External website or live demo:
+                             <a href="https://your-project-url.com" target="_blank" rel="noopener">
+                               View Live Demo →
+                             </a>
+
+                             YouTube or Vimeo video (embedded):
+                             <iframe width="100%" height="315"
+                               src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+                               title="Project demo video" frameborder="0"
+                               allow="accelerometer; autoplay; clipboard-write; encrypted-media;
+                                      gyroscope; picture-in-picture"
+                               allowfullscreen
+                               style="border-radius:8px; margin:12px 0;">
+                             </iframe>
+
+                             GitHub repository:
+                             <a href="https://github.com/your-username/repo-name"
+                                target="_blank" rel="noopener">
+                               View on GitHub →
+                             </a>
+
+                             PDF or document:
+                             <a href="docs/project-report.pdf" target="_blank" rel="noopener">
+                               Download Report (PDF) →
+                             </a>
+                             ============================================================ -->
                         <span class="project-category" data-i18n="portfolio.p4_category">Aviation Operations</span>
                         <h3 data-i18n="portfolio.p4_title">Airport CTR Drone Height Calculator</h3>
                         <p class="project-description" data-i18n="portfolio.p4_description">
@@ -1761,7 +1905,7 @@
                             <span class="tech-badge">Aviation Regs</span>
                             <span class="tech-badge">Data Analysis</span>
                         </div>
-                        <a href="#" class="project-link drawer-trigger" data-project="p4" data-i18n="portfolio.view_details">Ver detalles</a>
+                        <a href="#" class="project-link drawer-trigger" data-project="p4" data-i18n="portfolio.view_details">View details</a>
                     </div>
                 </div>
                 
@@ -1786,6 +1930,54 @@
                             <span data-i18n="portfolio.p3_img_placeholder">[INSERTAR IMAGEN: C-UAS SYSTEM]<br>Computer Vision / Tracking System</span>
                         </div>
                         <div class="project-content">
+                        <!-- ============================================================
+                             HOW TO ADD IMAGES TO THIS PROJECT PANEL
+                             ============================================================
+                             Replace the src attribute below with your image file path.
+                             Supported formats: JPG, PNG, WebP, GIF, SVG.
+                             Example — single image:
+                             <img src="images/project-name/screenshot1.jpg"
+                                  alt="Brief description of the image"
+                                  style="max-width:100%; border-radius:8px; margin:12px 0;" />
+
+                             Example — image gallery (side by side):
+                             <div style="display:flex; gap:12px; flex-wrap:wrap; margin:12px 0;">
+                               <img src="images/project-name/img1.jpg" alt="..."
+                                    style="width:48%; border-radius:8px;" />
+                               <img src="images/project-name/img2.jpg" alt="..."
+                                    style="width:48%; border-radius:8px;" />
+                             </div>
+                             ============================================================ -->
+
+                        <!-- ============================================================
+                             HOW TO ADD LINKS (VIDEOS, WEBSITES, DEMOS, REPOS)
+                             ============================================================
+                             External website or live demo:
+                             <a href="https://your-project-url.com" target="_blank" rel="noopener">
+                               View Live Demo →
+                             </a>
+
+                             YouTube or Vimeo video (embedded):
+                             <iframe width="100%" height="315"
+                               src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+                               title="Project demo video" frameborder="0"
+                               allow="accelerometer; autoplay; clipboard-write; encrypted-media;
+                                      gyroscope; picture-in-picture"
+                               allowfullscreen
+                               style="border-radius:8px; margin:12px 0;">
+                             </iframe>
+
+                             GitHub repository:
+                             <a href="https://github.com/your-username/repo-name"
+                                target="_blank" rel="noopener">
+                               View on GitHub →
+                             </a>
+
+                             PDF or document:
+                             <a href="docs/project-report.pdf" target="_blank" rel="noopener">
+                               Download Report (PDF) →
+                             </a>
+                             ============================================================ -->
                             <span class="project-category" data-i18n="portfolio.p3_category">Computer Vision</span>
                             <h3 data-i18n="portfolio.p3_title">C-UAS Drone Tracking System</h3>
                             <p class="project-description" data-i18n="portfolio.p3_description">
@@ -1800,7 +1992,7 @@
                                 <span class="tech-badge">Computer Vision</span>
                                 <span class="tech-badge">Roboflow</span>
                             </div>
-                            <a href="https://github.com/miquelht13/MED-TransversalProject/tree/main" class="project-link" target="_blank" data-i18n="portfolio.view_github">Ver en GitHub</a>
+                            <a href="https://github.com/miquelht13/MED-TransversalProject/tree/main" class="project-link" target="_blank" data-i18n="portfolio.view_github">View on GitHub</a>
                         </div>
                     </div>
                     
@@ -1810,6 +2002,54 @@
                             <span data-i18n="portfolio.p5_img_placeholder">[INSERTAR IMAGEN: SORA ASSESSMENT]<br>Risk Assessment / Medical Delivery</span>
                         </div>
                         <div class="project-content">
+                        <!-- ============================================================
+                             HOW TO ADD IMAGES TO THIS PROJECT PANEL
+                             ============================================================
+                             Replace the src attribute below with your image file path.
+                             Supported formats: JPG, PNG, WebP, GIF, SVG.
+                             Example — single image:
+                             <img src="images/project-name/screenshot1.jpg"
+                                  alt="Brief description of the image"
+                                  style="max-width:100%; border-radius:8px; margin:12px 0;" />
+
+                             Example — image gallery (side by side):
+                             <div style="display:flex; gap:12px; flex-wrap:wrap; margin:12px 0;">
+                               <img src="images/project-name/img1.jpg" alt="..."
+                                    style="width:48%; border-radius:8px;" />
+                               <img src="images/project-name/img2.jpg" alt="..."
+                                    style="width:48%; border-radius:8px;" />
+                             </div>
+                             ============================================================ -->
+
+                        <!-- ============================================================
+                             HOW TO ADD LINKS (VIDEOS, WEBSITES, DEMOS, REPOS)
+                             ============================================================
+                             External website or live demo:
+                             <a href="https://your-project-url.com" target="_blank" rel="noopener">
+                               View Live Demo →
+                             </a>
+
+                             YouTube or Vimeo video (embedded):
+                             <iframe width="100%" height="315"
+                               src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+                               title="Project demo video" frameborder="0"
+                               allow="accelerometer; autoplay; clipboard-write; encrypted-media;
+                                      gyroscope; picture-in-picture"
+                               allowfullscreen
+                               style="border-radius:8px; margin:12px 0;">
+                             </iframe>
+
+                             GitHub repository:
+                             <a href="https://github.com/your-username/repo-name"
+                                target="_blank" rel="noopener">
+                               View on GitHub →
+                             </a>
+
+                             PDF or document:
+                             <a href="docs/project-report.pdf" target="_blank" rel="noopener">
+                               Download Report (PDF) →
+                             </a>
+                             ============================================================ -->
                             <span class="project-category" data-i18n="portfolio.p5_category">Safety & Compliance</span>
                             <h3 data-i18n="portfolio.p5_title">SORA Medical Delivery in Andorra</h3>
                             <p class="project-description" data-i18n="portfolio.p5_description">
@@ -1823,7 +2063,7 @@
                                 <span class="tech-badge">UAS Operations</span>
                                 <span class="tech-badge">Medical Logistics</span>
                             </div>
-                            <a href="#" class="project-link drawer-trigger" data-project="p3" data-i18n="portfolio.view_details">Ver detalles</a>
+                            <a href="#" class="project-link drawer-trigger" data-project="p3" data-i18n="portfolio.view_details">View details</a>
                         </div>
                     </div>
                 
@@ -1841,6 +2081,54 @@
                             <span data-i18n="portfolio.p7_img_placeholder">[INSERTAR IMAGEN: HEXSOON PROJECT]<br>Autonomous Flight / Color Detection</span>
                         </div>
                         <div class="project-content">
+                        <!-- ============================================================
+                             HOW TO ADD IMAGES TO THIS PROJECT PANEL
+                             ============================================================
+                             Replace the src attribute below with your image file path.
+                             Supported formats: JPG, PNG, WebP, GIF, SVG.
+                             Example — single image:
+                             <img src="images/project-name/screenshot1.jpg"
+                                  alt="Brief description of the image"
+                                  style="max-width:100%; border-radius:8px; margin:12px 0;" />
+
+                             Example — image gallery (side by side):
+                             <div style="display:flex; gap:12px; flex-wrap:wrap; margin:12px 0;">
+                               <img src="images/project-name/img1.jpg" alt="..."
+                                    style="width:48%; border-radius:8px;" />
+                               <img src="images/project-name/img2.jpg" alt="..."
+                                    style="width:48%; border-radius:8px;" />
+                             </div>
+                             ============================================================ -->
+
+                        <!-- ============================================================
+                             HOW TO ADD LINKS (VIDEOS, WEBSITES, DEMOS, REPOS)
+                             ============================================================
+                             External website or live demo:
+                             <a href="https://your-project-url.com" target="_blank" rel="noopener">
+                               View Live Demo →
+                             </a>
+
+                             YouTube or Vimeo video (embedded):
+                             <iframe width="100%" height="315"
+                               src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+                               title="Project demo video" frameborder="0"
+                               allow="accelerometer; autoplay; clipboard-write; encrypted-media;
+                                      gyroscope; picture-in-picture"
+                               allowfullscreen
+                               style="border-radius:8px; margin:12px 0;">
+                             </iframe>
+
+                             GitHub repository:
+                             <a href="https://github.com/your-username/repo-name"
+                                target="_blank" rel="noopener">
+                               View on GitHub →
+                             </a>
+
+                             PDF or document:
+                             <a href="docs/project-report.pdf" target="_blank" rel="noopener">
+                               Download Report (PDF) →
+                             </a>
+                             ============================================================ -->
                             <span class="project-category" data-i18n="portfolio.p7_category">Autonomous Systems</span>
                             <h3 data-i18n="portfolio.p7_title">Hexsoon Edu450 Autonomous System</h3>
                             <p class="project-description" data-i18n="portfolio.p7_description">
@@ -1855,7 +2143,7 @@
                                 <span class="tech-badge">ArduPilot</span>
                                 <span class="tech-badge">Autonomous Flight</span>
                             </div>
-                            <a href="#" class="project-link drawer-trigger" data-project="p5" data-i18n="portfolio.view_details">Ver detalles</a>
+                            <a href="#" class="project-link drawer-trigger" data-project="p5" data-i18n="portfolio.view_details">View details</a>
                         </div>
                     </div>
                     
@@ -1865,6 +2153,54 @@
                             <span data-i18n="portfolio.p6_img_placeholder">[INSERTAR IMAGEN: ASTERIX APP]<br>Air Traffic Visualization</span>
                         </div>
                         <div class="project-content">
+                        <!-- ============================================================
+                             HOW TO ADD IMAGES TO THIS PROJECT PANEL
+                             ============================================================
+                             Replace the src attribute below with your image file path.
+                             Supported formats: JPG, PNG, WebP, GIF, SVG.
+                             Example — single image:
+                             <img src="images/project-name/screenshot1.jpg"
+                                  alt="Brief description of the image"
+                                  style="max-width:100%; border-radius:8px; margin:12px 0;" />
+
+                             Example — image gallery (side by side):
+                             <div style="display:flex; gap:12px; flex-wrap:wrap; margin:12px 0;">
+                               <img src="images/project-name/img1.jpg" alt="..."
+                                    style="width:48%; border-radius:8px;" />
+                               <img src="images/project-name/img2.jpg" alt="..."
+                                    style="width:48%; border-radius:8px;" />
+                             </div>
+                             ============================================================ -->
+
+                        <!-- ============================================================
+                             HOW TO ADD LINKS (VIDEOS, WEBSITES, DEMOS, REPOS)
+                             ============================================================
+                             External website or live demo:
+                             <a href="https://your-project-url.com" target="_blank" rel="noopener">
+                               View Live Demo →
+                             </a>
+
+                             YouTube or Vimeo video (embedded):
+                             <iframe width="100%" height="315"
+                               src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+                               title="Project demo video" frameborder="0"
+                               allow="accelerometer; autoplay; clipboard-write; encrypted-media;
+                                      gyroscope; picture-in-picture"
+                               allowfullscreen
+                               style="border-radius:8px; margin:12px 0;">
+                             </iframe>
+
+                             GitHub repository:
+                             <a href="https://github.com/your-username/repo-name"
+                                target="_blank" rel="noopener">
+                               View on GitHub →
+                             </a>
+
+                             PDF or document:
+                             <a href="docs/project-report.pdf" target="_blank" rel="noopener">
+                               Download Report (PDF) →
+                             </a>
+                             ============================================================ -->
                             <span class="project-category" data-i18n="portfolio.p6_category">Air Traffic Management</span>
                             <h3 data-i18n="portfolio.p6_title">ASTERIX Air Traffic Decoder</h3>
                             <p class="project-description" data-i18n="portfolio.p6_description">
@@ -1879,7 +2215,7 @@
                                 <span class="tech-badge">Data Visualization</span>
                                 <span class="tech-badge">Google Maps API</span>
                             </div>
-                            <a href="#" class="project-link drawer-trigger" data-project="p7" data-i18n="portfolio.view_details">Ver detalles</a>
+                            <a href="#" class="project-link drawer-trigger" data-project="p7" data-i18n="portfolio.view_details">View details</a>
                         </div>
                     </div>
                     
@@ -1889,6 +2225,54 @@
                             <span data-i18n="portfolio.p8_img_placeholder">[INSERTAR IMAGEN: COLLISION AVOIDANCE]<br>Python Algorithm / Safety System</span>
                         </div>
                         <div class="project-content">
+                        <!-- ============================================================
+                             HOW TO ADD IMAGES TO THIS PROJECT PANEL
+                             ============================================================
+                             Replace the src attribute below with your image file path.
+                             Supported formats: JPG, PNG, WebP, GIF, SVG.
+                             Example — single image:
+                             <img src="images/project-name/screenshot1.jpg"
+                                  alt="Brief description of the image"
+                                  style="max-width:100%; border-radius:8px; margin:12px 0;" />
+
+                             Example — image gallery (side by side):
+                             <div style="display:flex; gap:12px; flex-wrap:wrap; margin:12px 0;">
+                               <img src="images/project-name/img1.jpg" alt="..."
+                                    style="width:48%; border-radius:8px;" />
+                               <img src="images/project-name/img2.jpg" alt="..."
+                                    style="width:48%; border-radius:8px;" />
+                             </div>
+                             ============================================================ -->
+
+                        <!-- ============================================================
+                             HOW TO ADD LINKS (VIDEOS, WEBSITES, DEMOS, REPOS)
+                             ============================================================
+                             External website or live demo:
+                             <a href="https://your-project-url.com" target="_blank" rel="noopener">
+                               View Live Demo →
+                             </a>
+
+                             YouTube or Vimeo video (embedded):
+                             <iframe width="100%" height="315"
+                               src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+                               title="Project demo video" frameborder="0"
+                               allow="accelerometer; autoplay; clipboard-write; encrypted-media;
+                                      gyroscope; picture-in-picture"
+                               allowfullscreen
+                               style="border-radius:8px; margin:12px 0;">
+                             </iframe>
+
+                             GitHub repository:
+                             <a href="https://github.com/your-username/repo-name"
+                                target="_blank" rel="noopener">
+                               View on GitHub →
+                             </a>
+
+                             PDF or document:
+                             <a href="docs/project-report.pdf" target="_blank" rel="noopener">
+                               Download Report (PDF) →
+                             </a>
+                             ============================================================ -->
                             <span class="project-category" data-i18n="portfolio.p8_category">Flight Safety</span>
                             <h3 data-i18n="portfolio.p8_title">Aircraft Collision Avoidance Algorithm</h3>
                             <p class="project-description" data-i18n="portfolio.p8_description">
@@ -1902,7 +2286,7 @@
                                 <span class="tech-badge">Trajectory Planning</span>
                                 <span class="tech-badge">Safety Algorithms</span>
                             </div>
-                            <a href="#" class="project-link drawer-trigger" data-project="p6" data-i18n="portfolio.view_details">Ver detalles</a>
+                            <a href="#" class="project-link drawer-trigger" data-project="p6" data-i18n="portfolio.view_details">View details</a>
                         </div>
                     </div>
                 
@@ -1917,8 +2301,8 @@
     <section id="contact">
         <div class="container">
             <div class="section-header">
-                <p class="section-label" data-i18n="contact.label">Hablemos</p>
-                <h2 class="section-title" data-i18n="contact.title">Contacto</h2>
+                <p class="section-label" data-i18n="contact.label">Let's Talk</p>
+                <h2 class="section-title" data-i18n="contact.title">Contact</h2>
             </div>
             
             <div class="contact-content">
@@ -1937,9 +2321,9 @@
                     </div>
                     
                     <div class="contact-card fade-in">
-                        <div class="contact-icon">📱</div>
-                        <h3 data-i18n="contact.phone_label">Teléfono</h3>
-                        <a href="tel:+34644054499" style="color: var(--secondary); font-size: 0.95rem;">+34 644 054 499</a>
+                        <div class="contact-icon">💼</div>
+                        <h3>LinkedIn</h3>
+                        <a href="https://www.linkedin.com/in/miquel-huete-tabernero/" target="_blank" rel="noopener" style="color: var(--secondary); font-size: 0.95rem;">miquel-huete-tabernero</a>
                     </div>
                 </div>
                 
@@ -1982,7 +2366,7 @@
             </div>
             
             <div class="footer-bottom">
-                <p data-i18n="footer.copyright">&copy; 2026 Miquel Huete Tabernero. Todos los derechos reservados.</p>
+                <p data-i18n="footer.copyright">&copy; 2026 Miquel Huete Tabernero. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -2004,7 +2388,7 @@
             about: {
                 label: "Conóceme", title: "Sobre Mí",
                 text1: "Soy un <strong>Ingeniero de Sistemas Aeroespaciales</strong> especializado en Sistemas de Aeronaves No Tripuladas (UAS) con experiencia práctica en tecnología de drones, operaciones U-Space y seguridad aeronáutica. Mi trayectoria profesional combina desarrollo técnico innovador con gestión de proyectos y cumplimiento normativo.",
-                text2: "Actualmente trabajo en <strong>Telespazio Ibérica</strong> como Software Analyst, donde lidero proyectos críticos como EXTINCIA (sistemas de detección de conflictos para emergencias forestales) e ISSEC (operaciones U-Space). Mi experiencia internacional en <strong>Alemania</strong> (Dronivo GmbH) me permitió desarrollar soluciones de alto rendimiento integrando comunicación satelital Starlink con sistemas ArduPilot.",
+                text2: "Actualmente trabajo en <strong>Telespazio Ibérica</strong> como Drone Analyst, liderando proyectos clave de I+D: EXTINCIA (detección y resolución de conflictos para emergencias forestales UAS), ISSEC (soporte USSP y certificación U-Space) e IRAIN. Mi experiencia internacional en <strong>Alemania</strong> (Dronivo GmbH) me permitió desarrollar soluciones de alto rendimiento integrando comunicación satelital Starlink con sistemas ArduPilot-Pixhawk.",
                 text3: "Mi pasión es crear soluciones que empujen los límites de lo posible en aviación autónoma, siempre con un enfoque en seguridad, innovación y excelencia operacional.",
                 stat1: "Años de Experiencia", stat4: "Licencias de Piloto"
             },
@@ -2063,7 +2447,7 @@
             about: {
                 label: "Get to Know Me", title: "About Me",
                 text1: "I am an <strong>Aerospace Systems Engineer</strong> specializing in Unmanned Aircraft Systems (UAS) with hands-on experience in drone technology, U-Space operations, and aviation safety. My professional trajectory combines innovative technical development with project management and regulatory compliance.",
-                text2: "I currently work at <strong>Telespazio Ibérica</strong> as a Software Analyst, where I lead critical projects such as EXTINCIA (conflict detection systems for forest fire emergencies) and ISSEC (U-Space operations). My international experience in <strong>Germany</strong> (Dronivo GmbH) allowed me to develop high-performance solutions integrating Starlink satellite communication with ArduPilot systems.",
+                text2: "I currently work at <strong>Telespazio Ibérica</strong> as a Drone Analyst, leading critical R&D projects: EXTINCIA (conflict detection &amp; resolution for forest-fire UAS operations), ISSEC (U-Space Service Provider support &amp; USSP certification), and IRAIN. My international experience in <strong>Germany</strong> (Dronivo GmbH) allowed me to develop high-performance solutions integrating Starlink satellite communication with ArduPilot-Pixhawk systems.",
                 text3: "My passion is creating solutions that push the boundaries of what is possible in autonomous aviation, always with a focus on safety, innovation, and operational excellence.",
                 stat1: "Years of Experience", stat4: "Pilot Licenses"
             },
@@ -2124,7 +2508,7 @@
 Incluye un simulador RADAR completamente funcional, algoritmos de tracking multi-objetivo basados en filtros IMM-EKF (Interacting Multiple Model Extended Kalman Filter), y un módulo de predicción de trayectorias. El sistema es capaz de anticipar y resolver colisiones UAS-to-UAS y VFR-to-UAS durante operaciones activas de extinción de incendios, garantizando la separación segura en espacio aéreo no segregado.
 
 El proyecto forma parte del ecosistema U-Space e ISSEC de Telespazio, y está alineado con los estándares regulatorios de EASA para operaciones en espacio aéreo de categoría específica.`,
-                tech: ["Python", "IMM-EKF", "RADAR Simulation", "U-Space", "CD&R", "Trajectory Prediction"]
+                tech: ["Python", "MATLAB", "IMM-EKF", "RADAR Simulation", "U-Space", "CD&R", "Trajectory Prediction", "Docker", "Git"]
             },
             en: {
                 category: "Emergency Response Systems",
@@ -2134,7 +2518,7 @@ El proyecto forma parte del ecosistema U-Space e ISSEC de Telespazio, y está al
 Includes a fully functional RADAR simulator, multi-target tracking algorithms based on IMM-EKF (Interacting Multiple Model Extended Kalman Filter) filters, and a trajectory prediction module. The system can anticipate and resolve UAS-to-UAS and VFR-to-UAS collisions during active firefighting operations, ensuring safe separation in non-segregated airspace.
 
 The project is part of Telespazio's U-Space and ISSEC ecosystem, aligned with EASA regulatory standards for specific category airspace operations.`,
-                tech: ["Python", "IMM-EKF", "RADAR Simulation", "U-Space", "CD&R", "Trajectory Prediction"]
+                tech: ["Python", "MATLAB", "IMM-EKF", "RADAR Simulation", "U-Space", "CD&R", "Trajectory Prediction", "Docker", "Git"]
             },
             media: { type: "placeholder", text: "EXTINCIA — CD&R / RADAR / Tracking System" }
         },
@@ -2303,7 +2687,7 @@ Implements horizontal and vertical separation metrics, simultaneous multiple con
     };
 
     // ==================== LANGUAGE SYSTEM ====================
-    let currentLanguage = localStorage.getItem('preferredLanguage') || 'es';
+    let currentLanguage = localStorage.getItem('preferredLanguage') || 'en';
     if (currentLanguage !== 'es' && currentLanguage !== 'en') currentLanguage = 'es';
 
     function getNestedValue(obj, keyPath) {
@@ -2482,12 +2866,12 @@ Implements horizontal and vertical separation metrics, simultaneous multiple con
         document.getElementById('mdp-country-title').textContent = location.country;
 
         const statRows = {
-            'España':   { year: '2023–2025', orgs: '2 empresas' },
-            'Alemania': { year: '2024',       orgs: '1 empresa'  }
+            'Spain':   { year: '2023–2025', orgs: '2 companies' },
+            'Germany': { year: '2024',       orgs: '1 company'  }
         };
         const key   = location.name;
         const stats = statRows[key] || { year: '–', orgs: '–' };
-        let html = `<span class="mdp-status-badge">${key === 'España' ? 'Sede Actual' : 'Experiencia Internacional'}</span>`;
+        let html = `<span class="mdp-status-badge">${key === 'Spain' ? 'Current Base' : 'International Experience'}</span>`;
         location.companies.forEach(company => {
             html += `<div class="mdp-company-block">
                 <span class="mdp-company-name">${company.name}</span>
@@ -2496,8 +2880,8 @@ Implements horizontal and vertical separation metrics, simultaneous multiple con
             </div>`;
         });
         html += `<div class="mdp-stat-row">
-            <div class="mdp-stat"><div class="mdp-stat-label">Período</div><div class="mdp-stat-value">${stats.year}</div></div>
-            <div class="mdp-stat"><div class="mdp-stat-label">Empresas</div><div class="mdp-stat-value">${stats.orgs}</div></div>
+            <div class="mdp-stat"><div class="mdp-stat-label">Period</div><div class="mdp-stat-value">${stats.year}</div></div>
+            <div class="mdp-stat"><div class="mdp-stat-label">Companies</div><div class="mdp-stat-value">${stats.orgs}</div></div>
         </div>`;
         bodyEl.innerHTML = html;
         panel.classList.add('panel-active');
@@ -2521,16 +2905,16 @@ Implements horizontal and vertical separation metrics, simultaneous multiple con
 
         const locationData = {
             ES: {
-                name: 'España', country: 'España 🇪🇸',
+                name: 'Spain', country: 'Spain 🇪🇸',
                 companies: [
-                    { name: 'Telespazio Ibérica', period: 'Oct 2024 – Presente', role: 'Software Analyst' },
-                    { name: 'ENAIRE',              period: 'Sep 2023 – Feb 2024', role: 'Engineering Intern' }
+                    { name: 'Telespazio Ibérica', period: 'Oct 2024 – Present', role: 'Drone Analyst' },
+                    { name: 'ENAIRE',              period: 'Sep 2023 – Feb 2024', role: 'ATC Technical Supervision Intern' }
                 ]
             },
             DE: {
-                name: 'Alemania', country: 'Alemania 🇩🇪',
+                name: 'Germany', country: 'Germany 🇩🇪',
                 companies: [
-                    { name: 'Dronivo GmbH', period: 'Feb 2024 – Ago 2024', role: 'R&D UAS Engineer' }
+                    { name: 'Dronivo GmbH', period: 'Feb 2024 – Aug 2024', role: 'R&D Engineer Assistant (Intern)' }
                 ]
             }
         };
